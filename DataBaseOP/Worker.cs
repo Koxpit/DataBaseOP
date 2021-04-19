@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace DataBaseOP
 {
-    public partial class Form1 : Form
+    public partial class Worker : Form
     {
-        public Form1()
+        public Worker()
         {
             InitializeComponent();
         }
