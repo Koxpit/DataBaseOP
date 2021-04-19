@@ -1,0 +1,16 @@
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\bin\Debug\DataBaseOP.exe.config
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\bin\Debug\DataBaseOP.exe
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\bin\Debug\DataBaseOP.pdb
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.csprojAssemblyReference.cache
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Properties.Resources.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.csproj.GenerateResource.cache
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.csproj.CoreCompileInputs.cache
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.exe
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.pdb
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.DataBase.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Category.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Position.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Product.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Realization.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Supplier.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Worker.resources
