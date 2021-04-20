@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using DataBaseOP.Database;
 
 namespace DataBaseOP
 {
@@ -20,7 +21,6 @@ namespace DataBaseOP
 
         private void exit_Click(object sender, EventArgs e)
         {
-
             DialogResult result = MessageBox.Show("Вы уверен что хотите выйти ?", "Внимание", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 
             if (result == DialogResult.OK)
@@ -31,47 +31,52 @@ namespace DataBaseOP
 
         private void Worker_Click(object sender, EventArgs e)
         {
-            Worker newForm = new Worker();
+            WorkerForm newForm = new WorkerForm();
             newForm.Show();
         }
 
         private void Position_Click(object sender, EventArgs e)
         {
-            Position newForm = new Position();
+            PositionForm newForm = new PositionForm();
             newForm.Show();
         }
 
         private void Trademark_Click(object sender, EventArgs e)
         {
-            Trademark newForm = new Trademark();
+            TrademarkForm newForm = new TrademarkForm();
             newForm.Show();
         }
 
         private void Product_Click(object sender, EventArgs e)
         {
-            Product newForm = new Product();
+            ProductForm newForm = new ProductForm();
             newForm.Show();
         }
 
         private void Realization_Click(object sender, EventArgs e)
         {
-            Realization newForm = new Realization();
+            RealizationForm newForm = new RealizationForm();
             newForm.Show();
         }
 
         private void Supplier_Click(object sender, EventArgs e)
         {
-            Supplier newForm = new Supplier();
+            SupplierForm newForm = new SupplierForm();
             newForm.Show();
         }
 
         private void Category_Click(object sender, EventArgs e)
         {
-            Category newForm = new Category();
+            CategoryForm newForm = new CategoryForm();
             newForm.Show();
         }
 
         private void OneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DataBase_Load(object sender, EventArgs e)
         {
 
         }

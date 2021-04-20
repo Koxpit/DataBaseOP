@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,12 +47,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Category.cs">
+    <Compile Include="CategoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Category.Designer.cs">
-      <DependentUpon>Category.cs</DependentUpon>
+    <Compile Include="CategoryForm.Designer.cs">
+      <DependentUpon>CategoryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\PositionController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\RealizationController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="Controllers\TrademarkController.cs" />
+    <Compile Include="Controllers\WorkerController.cs" />
+    <Compile Include="Database\DataBaseOPContext.cs" />
+    <Compile Include="Database\Entities\Category.cs" />
+    <Compile Include="Database\Entities\Position.cs" />
+    <Compile Include="Database\Entities\Product.cs" />
+    <Compile Include="Database\Entities\Realization.cs" />
+    <Compile Include="Database\Entities\Supplier.cs" />
+    <Compile Include="Database\Entities\Trademark.cs" />
+    <Compile Include="Database\Entities\Worker.cs" />
     <Compile Include="Main_screen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,55 +76,55 @@
       <DependentUpon>Main_screen.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Position.cs">
+    <Compile Include="PositionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Position.Designer.cs">
-      <DependentUpon>Position.cs</DependentUpon>
+    <Compile Include="PositionForm.Designer.cs">
+      <DependentUpon>PositionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Product.cs">
+    <Compile Include="ProductForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Product.Designer.cs">
-      <DependentUpon>Product.cs</DependentUpon>
+    <Compile Include="ProductForm.Designer.cs">
+      <DependentUpon>ProductForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Realization.cs">
+    <Compile Include="RealizationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Realization.Designer.cs">
-      <DependentUpon>Realization.cs</DependentUpon>
+    <Compile Include="RealizationForm.Designer.cs">
+      <DependentUpon>RealizationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Supplier.cs">
+    <Compile Include="SupplierForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Supplier.Designer.cs">
-      <DependentUpon>Supplier.cs</DependentUpon>
+    <Compile Include="SupplierForm.Designer.cs">
+      <DependentUpon>SupplierForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Trademark.cs">
+    <Compile Include="TrademarkForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Trademark.Designer.cs">
-      <DependentUpon>Trademark.cs</DependentUpon>
+    <Compile Include="TrademarkForm.Designer.cs">
+      <DependentUpon>TrademarkForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Worker.cs">
+    <Compile Include="WorkerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Worker.Designer.cs">
-      <DependentUpon>Worker.cs</DependentUpon>
+    <Compile Include="WorkerForm.Designer.cs">
+      <DependentUpon>WorkerForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Category.resx">
-      <DependentUpon>Category.cs</DependentUpon>
+    <EmbeddedResource Include="CategoryForm.resx">
+      <DependentUpon>CategoryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main_screen.resx">
       <DependentUpon>Main_screen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Position.resx">
-      <DependentUpon>Position.cs</DependentUpon>
+    <EmbeddedResource Include="PositionForm.resx">
+      <DependentUpon>PositionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Product.resx">
-      <DependentUpon>Product.cs</DependentUpon>
+    <EmbeddedResource Include="ProductForm.resx">
+      <DependentUpon>ProductForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -118,17 +135,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Realization.resx">
-      <DependentUpon>Realization.cs</DependentUpon>
+    <EmbeddedResource Include="RealizationForm.resx">
+      <DependentUpon>RealizationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Supplier.resx">
-      <DependentUpon>Supplier.cs</DependentUpon>
+    <EmbeddedResource Include="SupplierForm.resx">
+      <DependentUpon>SupplierForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Trademark.resx">
-      <DependentUpon>Trademark.cs</DependentUpon>
+    <EmbeddedResource Include="TrademarkForm.resx">
+      <DependentUpon>TrademarkForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Worker.resx">
-      <DependentUpon>Worker.cs</DependentUpon>
+    <EmbeddedResource Include="WorkerForm.resx">
+      <DependentUpon>WorkerForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -143,5 +160,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

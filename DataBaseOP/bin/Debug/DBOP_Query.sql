@@ -112,21 +112,21 @@ VALUES
 -- INSERT
 
 GO
-CREATE PROCEDURE cp_InsertPosition
+CREATE PROCEDURE sp_InsertPosition
 @Name NVARCHAR(50)
 AS
 INSERT INTO Position (Name) VALUES (@Name)
 GO
 
 GO
-CREATE PROCEDURE cp_InsertCategory
+CREATE PROCEDURE sp_InsertCategory
 @Name NVARCHAR(100)
 AS
 INSERT INTO Category (Name) VALUES (@Name)
 GO
 
 GO
-CREATE PROCEDURE cp_InsertWorker
+CREATE PROCEDURE sp_InsertWorker
 @FIO NVARCHAR(100),
 @Phone NVARCHAR(11),
 @PositionID INT
@@ -135,7 +135,7 @@ INSERT INTO Worker (FIO, Phone, PositionID) VALUES (@FIO, @Phone, @PositionID)
 GO
 
 GO
-CREATE PROCEDURE cp_InsertTrademark
+CREATE PROCEDURE sp_InsertTrademark
 @Name NVARCHAR(100),
 @Address NVARCHAR(200),
 @Phone NVARCHAR(11)
@@ -144,7 +144,7 @@ INSERT INTO Trademark (Name, Address, Phone) VALUES (@Name, @Address, @Phone)
 GO
 
 GO
-CREATE PROCEDURE cp_InsertProduct
+CREATE PROCEDURE sp_InsertProduct
 @Name NVARCHAR(100),
 @Amount INT,
 @Unit NVARCHAR(20),
@@ -158,7 +158,7 @@ VALUES (@Name, @Amount, @Unit, @Cost, @CategoryID, @Description, @TrademarkID)
 GO
 
 GO
-CREATE PROCEDURE cp_InsertSupplier
+CREATE PROCEDURE sp_InsertSupplier
 @FIO NVARCHAR(100),
 @Address NVARCHAR(200),
 @Phone NVARCHAR(11)
@@ -167,7 +167,7 @@ INSERT INTO Supplier (FIO, Address, Phone) VALUES (@FIO, @Address, @Phone)
 GO
 
 GO
-CREATE PROCEDURE cp_InsertRealization
+CREATE PROCEDURE sp_InsertRealization
 @Number NVARCHAR(8),
 @RealizeDate DATE,
 @SupplierID INT,
@@ -190,7 +190,7 @@ GO
 -- UPDATE
 
 GO
-CREATE PROCEDURE cp_UpdatePosition
+CREATE PROCEDURE sp_UpdatePosition
 @ID INT,
 @Name NVARCHAR(50)
 AS
@@ -200,7 +200,7 @@ WHERE ID = @ID
 GO
 
 GO
-CREATE PROCEDURE cp_UpdateCategory
+CREATE PROCEDURE sp_UpdateCategory
 @ID INT,
 @Name NVARCHAR(100)
 AS
@@ -210,7 +210,7 @@ WHERE ID = @ID
 GO
 
 GO
-CREATE PROCEDURE cp_UpdateWorker
+CREATE PROCEDURE sp_UpdateWorker
 @ID INT,
 @FIO NVARCHAR(100),
 @Phone NVARCHAR(11),
@@ -222,7 +222,7 @@ WHERE ID = @ID
 GO
 
 GO
-CREATE PROCEDURE cp_UpdateTrademark
+CREATE PROCEDURE sp_UpdateTrademark
 @ID INT,
 @Name NVARCHAR(100),
 @Address NVARCHAR(200),
@@ -234,7 +234,7 @@ WHERE ID = @ID
 GO
 
 GO
-CREATE PROCEDURE cp_UpdateProduct
+CREATE PROCEDURE sp_UpdateProduct
 @ID INT,
 @Name NVARCHAR(100),
 @Amount INT,
@@ -252,7 +252,7 @@ WHERE ID = @ID
 GO
 
 GO
-CREATE PROCEDURE cp_UpdateSupplier
+CREATE PROCEDURE sp_UpdateSupplier
 @ID INT,
 @FIO NVARCHAR(100),
 @Address NVARCHAR(200),
@@ -264,7 +264,7 @@ WHERE ID = @ID
 GO
 
 GO
-CREATE PROCEDURE cp_UpdateRealization
+CREATE PROCEDURE sp_UpdateRealization
 @ID INT,
 @Number NVARCHAR(8),
 @RealizeDate DATE,
@@ -339,6 +339,145 @@ AS
 DELETE Realization WHERE ID = @ID
 GO
 
+
+
+-- GET
+
+GO
+CREATE PROCEDURE sp_GetAllPositions
+AS
+SELECT ID, Name AS 'Наименование', 'Удалить' AS [Операция]
+FROM Position
+GO
+
+GO
+CREATE PROCEDURE sp_GetAllCategories
+AS
+SELECT ID, Name AS 'Наименование', 'Удалить' AS [Операция]
+FROM Category
+GO
+
+GO
+CREATE PROCEDURE sp_GetAllTrademarks
+AS
+SELECT ID, Name AS 'Наименование', Address AS 'Адрес', Phone AS 'Телефон', 'Удалить' AS [Операция]
+FROM Trademark
+GO
+
+GO
+CREATE PROCEDURE sp_GetAllSuppliers
+AS
+SELECT ID, FIO AS 'ФИО', Address AS 'Адрес', Phone AS 'Телефон', 'Удалить' AS [Операция]
+FROM Supplier
+GO
+
+GO
+CREATE PROCEDURE sp_GetAllWorkers
+AS
+SELECT Worker.ID, FIO AS 'ФИО', Phone AS 'Телефон', Position.Name AS 'Должность', 'Удалить' AS [Операция]
+FROM Worker
+JOIN Position ON Worker.PositionID = Position.ID
+GO
+
+GO
+CREATE PROCEDURE sp_GetAllProducts
+AS
+SELECT 
+Product.ID, Product.Name AS 'Наименование', Amount AS 'Кол-во на складе', Unit AS 'Ед.изм.', 
+Cost AS 'Стоимость', Category.Name AS 'Категория', Description AS 'Описание', 
+Trademark.Name AS 'Бренд', 'Удалить' AS [Операция]
+FROM Product
+JOIN Category ON Product.CategoryID = Category.ID
+JOIN Trademark ON Product.TrademarkID = Trademark.ID
+GO
+
+GO
+CREATE PROCEDURE sp_GetAllRealizations
+AS
+SELECT 
+Realization.ID, Number AS 'Номер договора', RealizeDate AS 'Срок реализации', 
+Supplier.FIO AS 'ФИО поставщика', Supplier.Phone AS 'Телефон поставщика', 
+Worker.FIO AS 'ФИО работника', Worker.Phone AS 'Телефон работника', 
+Realization.Cost AS 'Стоимость', Discount AS 'Скидка (%)', AmountDue AS 'Сумма к оплате', PaidOf AS 'Оплачено', Change AS 'Сдача', 
+AmountProducts AS 'Кол-во продукции', Product.Name AS 'Наименование продукта', Realized AS 'Реализовано', 'Удалить' AS [Операция]
+FROM Realization
+JOIN Supplier ON Realization.SupplierID = Supplier.ID
+JOIN Worker ON Realization.SeniorID = Worker.ID
+JOIN Product ON Realization.ProductID = Product.ID
+GO
+
+GO
+CREATE PROCEDURE sp_GetSumOfReceipt
+@BeginDate DATE,
+@EndDate DATE
+AS
+SELECT SUM(AmountDue) AS 'Выручка', SUM(Cost) AS 'Оборот'
+FROM Realization
+WHERE RealizeDate BETWEEN @BeginDate AND @EndDate
+GO
+
+GO
+CREATE PROCEDURE sp_GetPositionIdByName
+@Name NVARCHAR(50)
+AS
+SELECT ID
+FROM Position
+WHERE Name = @Name
+GO
+
+GO
+CREATE PROCEDURE sp_GetTrademarkIdByName
+@Name NVARCHAR(100)
+AS
+SELECT ID
+FROM Trademark
+WHERE Name = @Name
+GO
+
+GO
+CREATE PROCEDURE sp_GetTrademarkIdByPhone
+@Phone NVARCHAR(11)
+AS
+SELECT ID
+FROM Trademark
+WHERE Phone = @Phone
+GO
+
+GO
+CREATE PROCEDURE sp_GetCategoryIdByName
+@Name NVARCHAR(100)
+AS
+SELECT ID
+FROM Category
+WHERE Name = @Name
+GO
+
+GO
+CREATE PROCEDURE sp_GetSupplierIdByPhone
+@Phone NVARCHAR(11)
+AS
+SELECT ID
+FROM Supplier
+WHERE Phone = @Phone
+GO
+
+GO
+CREATE PROCEDURE sp_GetWorkerIdByPhone
+@Phone NVARCHAR(11)
+AS
+SELECT ID
+FROM Worker
+WHERE Phone = @Phone
+GO
+
+GO
+CREATE PROCEDURE sp_GetProductIdByName
+@Name NVARCHAR(100)
+AS
+SELECT ID
+FROM Product
+WHERE Name = @Name
+GO
 
 -- Supplier - поставщик, Trademark - бренд.
 

@@ -162,6 +162,7 @@
             this.Name = "DataBase";
             this.ShowInTaskbar = false;
             this.Text = "База данных ОП";
+            this.Load += new System.EventHandler(this.DataBase_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
