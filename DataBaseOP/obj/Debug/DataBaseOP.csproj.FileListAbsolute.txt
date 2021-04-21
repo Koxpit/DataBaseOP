@@ -8,12 +8,6 @@ C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\Data
 C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.exe
 C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.pdb
 C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.DataBase.resources
-C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Category.resources
-C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Position.resources
-C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Product.resources
-C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Realization.resources
-C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Supplier.resources
-C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Worker.resources
 C:\Users\lenovo\source\repos\DataBaseOP\DataBaseOP\bin\Debug\DataBaseOP.exe.config
 C:\Users\lenovo\source\repos\DataBaseOP\DataBaseOP\bin\Debug\DataBaseOP.exe
 C:\Users\lenovo\source\repos\DataBaseOP\DataBaseOP\bin\Debug\DataBaseOP.pdb
@@ -31,3 +25,11 @@ C:\Users\lenovo\source\repos\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.csproj.C
 C:\Users\lenovo\source\repos\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.exe
 C:\Users\lenovo\source\repos\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.pdb
 C:\Users\lenovo\source\repos\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.CategoryForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.CategoryForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.PositionForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.ProductForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.RealizationForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.SupplierForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.TrademarkForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.WorkerForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.AboutBox.resources

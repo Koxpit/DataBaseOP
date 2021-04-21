@@ -171,6 +171,7 @@ namespace DataBaseOP.Database
 
         // SUPPLIER COMMANDS
 
+        
         public void AddSupplier(Supplier supplier)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -178,9 +179,9 @@ namespace DataBaseOP.Database
                 connection.Open();
 
                 Supplier newSupplier = supplier;
-                string fio = updatedSupplier.FIO;
-                string address = updatedSupplier.Address;
-                string phone = updatedSupplier.Phone;
+                string fio = newSupplier.FIO;
+                string address = newSupplier.Address;
+                string phone = newSupplier.Phone;
 
                 SqlCommand command = new SqlCommand("sp_InsertSupplier", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -193,7 +194,7 @@ namespace DataBaseOP.Database
                 connection.Close();
             }
         }
-
+        
         public void EditSupplier(Supplier supplier)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -473,6 +474,8 @@ namespace DataBaseOP.Database
             }
         }
 
+
+        
         public void EditWorker(Worker worker)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -481,15 +484,11 @@ namespace DataBaseOP.Database
 
                 Worker updatedWorker = worker;
                 int id = updatedWorker.ID;
-                string name = updatedWorker.Name;
-                string address = updatedWorker.Address;
                 string phone = updatedWorker.Phone;
 
                 SqlCommand command = new SqlCommand("sp_UpdateWorker", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@ID", id);
-                command.Parameters.AddWithValue("@Name", name);
-                command.Parameters.AddWithValue("@Address", address);
                 command.Parameters.AddWithValue("@Phone", phone);
 
                 command.ExecuteNonQuery();
@@ -497,7 +496,7 @@ namespace DataBaseOP.Database
                 connection.Close();
             }
         }
-
+        
         public DataTable GetAllWorkers()
         {
             DataTable dataTable;

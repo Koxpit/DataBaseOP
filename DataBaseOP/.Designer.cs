@@ -39,111 +39,172 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.OneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exit = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // Worker
             // 
-            this.Worker.Location = new System.Drawing.Point(12, 394);
+            this.Worker.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Worker.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Worker.BackgroundImage")));
+            this.Worker.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Worker.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.Worker.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Worker.Location = new System.Drawing.Point(13, 381);
             this.Worker.Name = "Worker";
             this.Worker.Size = new System.Drawing.Size(223, 101);
             this.Worker.TabIndex = 0;
             this.Worker.Text = "Рабочие";
-            this.Worker.UseVisualStyleBackColor = true;
+            this.Worker.UseVisualStyleBackColor = false;
             this.Worker.Click += new System.EventHandler(this.Worker_Click);
             // 
             // Position
             // 
-            this.Position.Location = new System.Drawing.Point(12, 287);
+            this.Position.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Position.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Position.BackgroundImage")));
+            this.Position.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Position.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.Position.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Position.Location = new System.Drawing.Point(13, 274);
             this.Position.Name = "Position";
             this.Position.Size = new System.Drawing.Size(223, 101);
             this.Position.TabIndex = 1;
             this.Position.Text = "Должность";
-            this.Position.UseVisualStyleBackColor = true;
+            this.Position.UseVisualStyleBackColor = false;
             this.Position.Click += new System.EventHandler(this.Position_Click);
             // 
             // Trademark
             // 
-            this.Trademark.Location = new System.Drawing.Point(241, 287);
+            this.Trademark.BackColor = System.Drawing.Color.Maroon;
+            this.Trademark.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Trademark.BackgroundImage")));
+            this.Trademark.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Trademark.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.Trademark.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Trademark.Location = new System.Drawing.Point(242, 274);
             this.Trademark.Name = "Trademark";
             this.Trademark.Size = new System.Drawing.Size(223, 101);
             this.Trademark.TabIndex = 2;
             this.Trademark.Text = "Бренд";
-            this.Trademark.UseVisualStyleBackColor = true;
+            this.Trademark.UseVisualStyleBackColor = false;
             this.Trademark.Click += new System.EventHandler(this.Trademark_Click);
             // 
             // Product
             // 
-            this.Product.Location = new System.Drawing.Point(241, 394);
+            this.Product.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Product.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Product.BackgroundImage")));
+            this.Product.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Product.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.Product.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Product.Location = new System.Drawing.Point(242, 381);
             this.Product.Name = "Product";
             this.Product.Size = new System.Drawing.Size(223, 101);
             this.Product.TabIndex = 3;
             this.Product.Text = "Продукт";
-            this.Product.UseVisualStyleBackColor = true;
+            this.Product.UseVisualStyleBackColor = false;
             this.Product.Click += new System.EventHandler(this.Product_Click);
             // 
             // Realization
             // 
-            this.Realization.Location = new System.Drawing.Point(470, 287);
+            this.Realization.BackColor = System.Drawing.Color.Maroon;
+            this.Realization.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Realization.BackgroundImage")));
+            this.Realization.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Realization.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.Realization.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Realization.Location = new System.Drawing.Point(471, 274);
             this.Realization.Name = "Realization";
             this.Realization.Size = new System.Drawing.Size(223, 101);
             this.Realization.TabIndex = 4;
             this.Realization.Text = "Реализация";
-            this.Realization.UseVisualStyleBackColor = true;
+            this.Realization.UseVisualStyleBackColor = false;
             this.Realization.Click += new System.EventHandler(this.Realization_Click);
             // 
             // Supplier
             // 
-            this.Supplier.Location = new System.Drawing.Point(470, 394);
+            this.Supplier.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Supplier.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Supplier.BackgroundImage")));
+            this.Supplier.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Supplier.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.Supplier.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Supplier.Location = new System.Drawing.Point(471, 381);
             this.Supplier.Name = "Supplier";
             this.Supplier.Size = new System.Drawing.Size(223, 101);
             this.Supplier.TabIndex = 5;
             this.Supplier.Text = "Поставщик";
-            this.Supplier.UseVisualStyleBackColor = true;
+            this.Supplier.UseVisualStyleBackColor = false;
             this.Supplier.Click += new System.EventHandler(this.Supplier_Click);
             // 
             // Category
             // 
-            this.Category.Location = new System.Drawing.Point(699, 287);
+            this.Category.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Category.BackgroundImage = global::DataBaseOP.Properties.Resources.buttons_PNG51;
+            this.Category.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Category.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.Category.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Category.Location = new System.Drawing.Point(700, 274);
             this.Category.Name = "Category";
             this.Category.Size = new System.Drawing.Size(223, 101);
             this.Category.TabIndex = 6;
             this.Category.Text = "Категория";
-            this.Category.UseVisualStyleBackColor = true;
+            this.Category.UseVisualStyleBackColor = false;
             this.Category.Click += new System.EventHandler(this.Category_Click);
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.Color.Maroon;
+            this.menuStrip1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.OneToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(934, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(934, 29);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // OneToolStripMenuItem
             // 
+            this.OneToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
             this.OneToolStripMenuItem.Name = "OneToolStripMenuItem";
-            this.OneToolStripMenuItem.Size = new System.Drawing.Size(96, 20);
+            this.OneToolStripMenuItem.Size = new System.Drawing.Size(127, 25);
             this.OneToolStripMenuItem.Text = "О Программе";
             this.OneToolStripMenuItem.Click += new System.EventHandler(this.OneToolStripMenuItem_Click);
             // 
             // exit
             // 
-            this.exit.Location = new System.Drawing.Point(699, 394);
+            this.exit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.exit.BackgroundImage = global::DataBaseOP.Properties.Resources.buttons_PNG51;
+            this.exit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.exit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.exit.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.exit.Location = new System.Drawing.Point(700, 381);
             this.exit.Name = "exit";
             this.exit.Size = new System.Drawing.Size(223, 101);
             this.exit.TabIndex = 8;
             this.exit.Text = "Выход";
-            this.exit.UseVisualStyleBackColor = true;
+            this.exit.UseVisualStyleBackColor = false;
             this.exit.Click += new System.EventHandler(this.exit_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Control;
+            this.label1.Location = new System.Drawing.Point(12, 130);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(915, 42);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "База данных для предприятия оптовой торговли";
             // 
             // DataBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Maroon;
+            this.BackgroundImage = global::DataBaseOP.Properties.Resources.tekstura;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(934, 502);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.exit);
             this.Controls.Add(this.Category);
             this.Controls.Add(this.Supplier);
@@ -161,8 +222,8 @@
             this.MinimizeBox = false;
             this.Name = "DataBase";
             this.ShowInTaskbar = false;
-            this.Text = "База данных ОП";
-            this.Load += new System.EventHandler(this.DataBase_Load);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "База данных ОТ";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -182,6 +243,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem OneToolStripMenuItem;
         private System.Windows.Forms.Button exit;
+        private System.Windows.Forms.Label label1;
     }
 }
 

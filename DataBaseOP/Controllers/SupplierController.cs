@@ -10,10 +10,10 @@ namespace DataBaseOP.Controllers
 {
     class SupplierController : BaseController
     {
-        public void Add(Supplier supplier)
-        {
-            Context.AddSupplier(supplier);
-        }
+     //   public void Add(Supplier supplier)
+     //   {
+      //      Context.AddSupplier(supplier);
+     //   }
 
         public void Edit(Supplier supplier)
         {

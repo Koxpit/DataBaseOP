@@ -14,19 +14,24 @@ namespace DataBaseOP
 {
     public partial class DataBase : Form
     {
+        
         public DataBase()
         {
             InitializeComponent();
+            this.FormClosing += DataBase_Closing;
+        }
+        private void DataBase_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+            if (MessageBox.Show("Вы уверен что хотите выйти ?", "Внимание", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.OK)
+                e.Cancel = false;
+            else
+                e.Cancel = true;
         }
 
         private void exit_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Вы уверен что хотите выйти ?", "Внимание", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-
-            if (result == DialogResult.OK)
-            {
                 this.Close();
-            }
         }
 
         private void Worker_Click(object sender, EventArgs e)
@@ -73,12 +78,8 @@ namespace DataBaseOP
 
         private void OneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void DataBase_Load(object sender, EventArgs e)
-        {
-
+            AboutBox newForm = new AboutBox();
+            newForm.Show();
         }
     }
 }
