@@ -29,7 +29,12 @@ namespace DataBaseOP.Controllers
         {
             dataGridView.DataSource = Context.GetAllCategories();
 
-            SetLinkCellsCommands(dataGridView, 2);
+            SetLinkCellsCommands(dataGridView, dataGridView.ColumnCount - 1);
+        }
+
+        public int GetCategoryIdByName(string categoryName)
+        {
+            return Context.GetCategoryIdByName(categoryName);
         }
     }
 }

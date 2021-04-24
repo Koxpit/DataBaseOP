@@ -41,6 +41,10 @@ namespace DataBaseOP
             this.dataGridViewTrademarks.Name = "dataGridViewTrademarks";
             this.dataGridViewTrademarks.Size = new System.Drawing.Size(800, 450);
             this.dataGridViewTrademarks.TabIndex = 0;
+            this.dataGridViewTrademarks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTrademarks_CellContentClick);
+            this.dataGridViewTrademarks.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTrademarks_CellValueChanged);
+            this.dataGridViewTrademarks.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewTrademarks_EditingControlShowing);
+            this.dataGridViewTrademarks.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewTrademarks_UserAddedRow);
             // 
             // TrademarkForm
             // 

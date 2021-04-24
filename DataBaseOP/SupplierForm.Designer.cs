@@ -41,6 +41,10 @@ namespace DataBaseOP
             this.dataGridViewSuppliers.Name = "dataGridViewSuppliers";
             this.dataGridViewSuppliers.Size = new System.Drawing.Size(800, 450);
             this.dataGridViewSuppliers.TabIndex = 0;
+            this.dataGridViewSuppliers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewSuppliers_CellContentClick);
+            this.dataGridViewSuppliers.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewSuppliers_CellValueChanged);
+            this.dataGridViewSuppliers.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewSuppliers_EditingControlShowing);
+            this.dataGridViewSuppliers.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewSuppliers_UserAddedRow);
             // 
             // SupplierForm
             // 

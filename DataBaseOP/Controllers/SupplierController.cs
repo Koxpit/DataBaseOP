@@ -10,10 +10,10 @@ namespace DataBaseOP.Controllers
 {
     class SupplierController : BaseController
     {
-     //   public void Add(Supplier supplier)
-     //   {
-      //      Context.AddSupplier(supplier);
-     //   }
+        public void Add(Supplier supplier)
+        {
+            Context.AddSupplier(supplier);
+        }
 
         public void Edit(Supplier supplier)
         {
@@ -29,7 +29,12 @@ namespace DataBaseOP.Controllers
         {
             dataGridView.DataSource = Context.GetAllSuppliers();
 
-            SetLinkCellsCommands(dataGridView, 4);
+            SetLinkCellsCommands(dataGridView, dataGridView.ColumnCount - 1);
+        }
+
+        public int GetSupplierIdByPhone(string supplierPhone)
+        {
+            return Context.GetSupplierIdByPhone(supplierPhone);
         }
     }
 }

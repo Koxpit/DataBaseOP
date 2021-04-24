@@ -18,7 +18,14 @@ namespace DataBaseOP
 
         private void CategoryForm_Load(object sender, EventArgs e)
         {
-            categoryController.GetAllCategories(ref dataGridViewCategories);
+            try
+            {
+                categoryController.GetAllCategories(ref dataGridViewCategories);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void dataGridViewCategories_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -50,6 +57,7 @@ namespace DataBaseOP
                 else if (task == "Изм.")
                 {
                     int rowIndex = e.RowIndex;
+
                     Category updatedCategory = new Category
                     {
                         ID = (int)dataGridViewCategories.CurrentRow.Cells[0].Value,

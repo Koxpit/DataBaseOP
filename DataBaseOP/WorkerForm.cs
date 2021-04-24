@@ -23,7 +23,14 @@ namespace DataBaseOP
 
         private void WorkerForm_Load(object sender, EventArgs e)
         {
-            
+            try
+            {
+                workerController.GetAllWorkers(ref dataGridViewWorkers);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

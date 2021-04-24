@@ -41,6 +41,10 @@ namespace DataBaseOP
             this.dataGridViewRealizations.Name = "dataGridViewRealizations";
             this.dataGridViewRealizations.Size = new System.Drawing.Size(800, 450);
             this.dataGridViewRealizations.TabIndex = 0;
+            this.dataGridViewRealizations.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRealizations_CellContentClick);
+            this.dataGridViewRealizations.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRealizations_CellValueChanged);
+            this.dataGridViewRealizations.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewRealizations_EditingControlShowing);
+            this.dataGridViewRealizations.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewRealizations_UserAddedRow);
             // 
             // RealizationForm
             // 

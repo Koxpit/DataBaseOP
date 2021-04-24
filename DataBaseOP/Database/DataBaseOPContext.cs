@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using DataBaseOP.Database.Entities;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataBaseOP.Database
 {
@@ -77,7 +73,6 @@ namespace DataBaseOP.Database
                 dataTable = new DataTable();
 
                 dataTable.Load(reader);
-                dataTable.Columns[2].ReadOnly = false;
 
                 connection.Close();
             }
@@ -94,7 +89,7 @@ namespace DataBaseOP.Database
             {
                 connection.Open();
 
-                Category newCategory = category;
+                Category newCategory = (Category)category;
                 string name = newCategory.Name;
 
                 SqlCommand command = new SqlCommand("sp_InsertCategory", connection);
@@ -113,7 +108,7 @@ namespace DataBaseOP.Database
             {
                 connection.Open();
 
-                Category updatedCategory = category;
+                Category updatedCategory = (Category)category;
                 int id = updatedCategory.ID;
                 string name = updatedCategory.Name;
 
@@ -166,6 +161,27 @@ namespace DataBaseOP.Database
             }
 
             return dataTable;
+        }
+
+        public int GetCategoryIdByName(string categoryName)
+        {
+            int categoryId = 0;
+            string name = categoryName;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_GetCategoryIdByName", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("Name", name);
+
+                categoryId = Convert.ToInt32(command.ExecuteScalar());
+
+                connection.Close();
+            }
+
+            return categoryId;
         }
 
 
@@ -235,11 +251,34 @@ namespace DataBaseOP.Database
 
                 dataTable.Load(reader);
                 dataTable.Columns[2].ReadOnly = false;
+                dataTable.Columns[3].ReadOnly = false;
+                dataTable.Columns[4].ReadOnly = false;
 
                 connection.Close();
             }
 
             return dataTable;
+        }
+
+        public int GetSupplierIdByPhone(string supplierPhone)
+        {
+            int supplierId = 0;
+            string phone = supplierPhone;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_GetSupplierIdByPhone", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("Phone", phone);
+
+                supplierId = Convert.ToInt32(command.ExecuteScalar());
+
+                connection.Close();
+            }
+
+            return supplierId;
         }
 
 
@@ -309,11 +348,34 @@ namespace DataBaseOP.Database
 
                 dataTable.Load(reader);
                 dataTable.Columns[2].ReadOnly = false;
+                dataTable.Columns[3].ReadOnly = false;
+                dataTable.Columns[4].ReadOnly = false;
 
                 connection.Close();
             }
 
             return dataTable;
+        }
+
+        public int GetTrademarkIdByName(string trademarkName)
+        {
+            int trademarkId = 0;
+            string name = trademarkName;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_GetTrademarkIdByName", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("Name", name);
+
+                trademarkId = Convert.ToInt32(command.ExecuteScalar());
+
+                connection.Close();
+            }
+
+            return trademarkId;
         }
 
 
@@ -375,11 +437,43 @@ namespace DataBaseOP.Database
 
                 dataTable.Load(reader);
                 dataTable.Columns[2].ReadOnly = false;
+                dataTable.Columns[3].ReadOnly = false;
+                dataTable.Columns[4].ReadOnly = false;
+                dataTable.Columns[5].ReadOnly = false;
+                dataTable.Columns[6].ReadOnly = false;
+                dataTable.Columns[7].ReadOnly = false;
+                dataTable.Columns[8].ReadOnly = false;
+                dataTable.Columns[9].ReadOnly = false;
+                dataTable.Columns[10].ReadOnly = false;
+                dataTable.Columns[11].ReadOnly = false;
+                dataTable.Columns[12].ReadOnly = false;
+                dataTable.Columns[13].ReadOnly = false;
 
                 connection.Close();
             }
 
             return dataTable;
+        }
+
+        public int GetRealizationIdByNumber(string realizationNumber)
+        {
+            int realizationId = 0;
+            string number = realizationNumber;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_GetRealizationIdByNumber", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("Number", number);
+
+                realizationId = Convert.ToInt32(command.ExecuteScalar());
+
+                connection.Close();
+            }
+
+            return realizationId;
         }
 
 
@@ -393,10 +487,22 @@ namespace DataBaseOP.Database
 
                 Product newProduct = product;
                 string name = newProduct.Name;
+                int amount = newProduct.Amount;
+                string unit = newProduct.Unit;
+                decimal cost = newProduct.Cost;
+                string description = newProduct.Description;
+                int categoryId = newProduct.CategoryID;
+                int trademarkId = newProduct.TrademarkID;
 
                 SqlCommand command = new SqlCommand("sp_InsertProduct", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Name", name);
+                command.Parameters.AddWithValue("@Amount", amount);
+                command.Parameters.AddWithValue("@Unit", unit);
+                command.Parameters.AddWithValue("@Cost", cost);
+                command.Parameters.AddWithValue("@Description", description);
+                command.Parameters.AddWithValue("@CategoryID", categoryId);
+                command.Parameters.AddWithValue("@TrademarkID", trademarkId);
 
                 command.ExecuteNonQuery();
 
@@ -413,11 +519,23 @@ namespace DataBaseOP.Database
                 Product updatedProduct = product;
                 int id = updatedProduct.ID;
                 string name = updatedProduct.Name;
+                int amount = updatedProduct.Amount;
+                string unit = updatedProduct.Unit;
+                decimal cost = updatedProduct.Cost;
+                string description = updatedProduct.Description;
+                int categoryId = updatedProduct.CategoryID;
+                int trademarkId = updatedProduct.TrademarkID;
 
                 SqlCommand command = new SqlCommand("sp_UpdateProduct", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@ID", id);
                 command.Parameters.AddWithValue("@Name", name);
+                command.Parameters.AddWithValue("@Amount", amount);
+                command.Parameters.AddWithValue("@Unit", unit);
+                command.Parameters.AddWithValue("@Cost", cost);
+                command.Parameters.AddWithValue("@Description", description);
+                command.Parameters.AddWithValue("@CategoryID", categoryId);
+                command.Parameters.AddWithValue("@TrademarkID", trademarkId);
 
                 command.ExecuteNonQuery();
 
@@ -440,11 +558,38 @@ namespace DataBaseOP.Database
 
                 dataTable.Load(reader);
                 dataTable.Columns[2].ReadOnly = false;
+                dataTable.Columns[3].ReadOnly = false;
+                dataTable.Columns[4].ReadOnly = false;
+                dataTable.Columns[5].ReadOnly = false;
+                dataTable.Columns[6].ReadOnly = false;
+                dataTable.Columns[7].ReadOnly = false;
+                dataTable.Columns[8].ReadOnly = false;
 
                 connection.Close();
             }
 
             return dataTable;
+        }
+
+        public int GetProductIdByName(string productName)
+        {
+            int productId = 0;
+            string name = productName;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_GetProductIdByName", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("Name", name);
+
+                productId = Convert.ToInt32(command.ExecuteScalar());
+
+                connection.Close();
+            }
+
+            return productId;
         }
 
 
@@ -517,6 +662,27 @@ namespace DataBaseOP.Database
             }
 
             return dataTable;
+        }
+
+        public int GetWorkerIdByPhone(string workerPhone)
+        {
+            int workerId = 0;
+            string phone = workerPhone;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_GetWorkerIdByPhone", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("Phone", phone);
+
+                workerId = Convert.ToInt32(command.ExecuteScalar());
+
+                connection.Close();
+            }
+
+            return workerId;
         }
     }
 }

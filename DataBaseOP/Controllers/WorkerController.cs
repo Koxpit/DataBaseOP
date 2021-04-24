@@ -1,9 +1,5 @@
 ﻿using DataBaseOP.Database.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DataBaseOP.Controllers
@@ -25,11 +21,14 @@ namespace DataBaseOP.Controllers
             Context.Delete(workerId, "sp_DeleteWorker");
         }
 
-        public void GetAllTrademarks(ref DataGridView dataGridView)
+        public void GetAllWorkers(ref DataGridView dataGridView)
         {
-            dataGridView.DataSource = Context.GetAllTrademarks();
+            dataGridView.DataSource = Context.GetAllWorkers();
+        }
 
-            SetLinkCellsCommands(dataGridView, 4);
+        public int GetWorkerIdByPhone(string workerPhone)
+        {
+            return Context.GetWorkerIdByPhone(workerPhone);
         }
     }
 }

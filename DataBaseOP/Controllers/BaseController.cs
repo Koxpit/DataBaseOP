@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace DataBaseOP.Controllers
 {
-    class BaseController
+    abstract class BaseController
     {
         public DataBaseOPContext Context { get; } = DataBaseOPContext.GetContext;
 

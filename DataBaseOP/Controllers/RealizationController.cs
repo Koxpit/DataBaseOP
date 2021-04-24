@@ -29,7 +29,12 @@ namespace DataBaseOP.Controllers
         {
             dataGridView.DataSource = Context.GetAllRealizations();
 
-            SetLinkCellsCommands(dataGridView, 15);
+            SetLinkCellsCommands(dataGridView, dataGridView.ColumnCount - 1);
+        }
+
+        public int GetRealizationIdByNumber(string realizationNumber)
+        {
+            return Context.GetRealizationIdByNumber(realizationNumber);
         }
     }
 }

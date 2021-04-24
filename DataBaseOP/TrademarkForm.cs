@@ -1,4 +1,5 @@
 ﻿using DataBaseOP.Controllers;
+using DataBaseOP.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ namespace DataBaseOP
     public partial class TrademarkForm : Form
     {
         private readonly TrademarkController trademarkController;
+        private bool newRowAdding = false;
 
         public TrademarkForm()
         {
@@ -23,7 +25,137 @@ namespace DataBaseOP
 
         private void TrademarkForm_Load(object sender, EventArgs e)
         {
-            trademarkController.GetAllTrademarks(ref dataGridViewTrademarks);
+            try
+            {
+                trademarkController.GetAllTrademarks(ref dataGridViewTrademarks);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dataGridViewTrademarks_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                int taskIndex = dataGridViewTrademarks.Rows[e.RowIndex].Cells["Операция"].ColumnIndex;
+
+                if (e.ColumnIndex == taskIndex)
+                {
+                    string task = dataGridViewTrademarks.Rows[e.RowIndex].Cells["Операция"].Value.ToString();
+
+                    if (task == "Удалить")
+                    {
+                        if (MessageBox.Show("Удалить эту строку?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            int id = (int)dataGridViewTrademarks.CurrentRow.Cells["ID"].Value;
+                            trademarkController.Delete(id);
+                        }
+                    }
+                    else if (task == "Добавить")
+                    {
+                        int rowIndex = dataGridViewTrademarks.Rows.Count - 2;
+                        DataGridViewRow row = dataGridViewTrademarks.Rows[rowIndex];
+
+                        Trademark newTrademark = new Trademark
+                        {
+                            Name = row.Cells["Наименование"].Value.ToString(),
+                            Address = row.Cells["Адрес"].Value.ToString(),
+                            Phone = row.Cells["Телефон"].Value.ToString()
+                        };
+
+                        trademarkController.Add(newTrademark);
+                        dataGridViewTrademarks.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
+                    }
+                    else if (task == "Изм.")
+                    {
+                        int rowIndex = e.RowIndex;
+                        DataGridViewRow row = dataGridViewTrademarks.Rows[rowIndex];
+
+                        Trademark updatedTrademark = new Trademark
+                        {
+                            ID = (int)row.Cells["ID"].Value,
+                            Name = row.Cells["Наименование"].Value.ToString(),
+                            Address = row.Cells["Адрес"].Value.ToString(),
+                            Phone = row.Cells["Телефон"].Value.ToString()
+                        };
+
+                        trademarkController.Edit(updatedTrademark);
+                        row.Cells["Операция"].Value = "Удалить";
+                    }
+
+                    trademarkController.GetAllTrademarks(ref dataGridViewTrademarks);
+                }
+            } 
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dataGridViewTrademarks_UserAddedRow(object sender, DataGridViewRowEventArgs e)
+        {
+            try
+            {
+                if (newRowAdding == false)
+                {
+                    newRowAdding = true;
+                    int lastRow = dataGridViewTrademarks.Rows.Count - 2;
+                    DataGridViewRow row = dataGridViewTrademarks.Rows[lastRow];
+                    DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
+                    dataGridViewTrademarks[4, lastRow] = linkCell;
+
+                    row.Cells["Операция"].Value = "Добавить";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dataGridViewTrademarks_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (newRowAdding == false)
+                {
+                    int rowIndex = dataGridViewTrademarks.SelectedCells[0].RowIndex;
+                    DataGridViewRow editingRow = dataGridViewTrademarks.Rows[rowIndex];
+
+                    DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
+                    dataGridViewTrademarks[4, rowIndex] = linkCell;
+                    editingRow.Cells["Операция"].Value = "Изм.";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dataGridViewTrademarks_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            e.Control.KeyPress -= new KeyPressEventHandler(Column_KeyPress);
+
+            if (dataGridViewTrademarks.CurrentCell.ColumnIndex == 1)
+            {
+                TextBox textBox = e.Control as TextBox;
+
+                if (textBox != null)
+                {
+                    textBox.KeyPress += new KeyPressEventHandler(Column_KeyPress);
+                }
+            }
+        }
+
+        private void Column_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsSymbol(e.KeyChar) && char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

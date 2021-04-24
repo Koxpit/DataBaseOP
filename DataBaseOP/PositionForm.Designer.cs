@@ -39,12 +39,9 @@ namespace DataBaseOP
             this.dataGridViewPositions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewPositions.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewPositions.Name = "dataGridViewPositions";
+            this.dataGridViewPositions.ReadOnly = true;
             this.dataGridViewPositions.Size = new System.Drawing.Size(800, 450);
             this.dataGridViewPositions.TabIndex = 0;
-            this.dataGridViewPositions.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewPositions_CellContentClick);
-            this.dataGridViewPositions.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewPositions_CellValueChanged);
-            this.dataGridViewPositions.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewPositions_EditingControlShowing);
-            this.dataGridViewPositions.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewPositions_UserAddedRow);
             // 
             // PositionForm
             // 

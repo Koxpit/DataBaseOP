@@ -29,7 +29,12 @@ namespace DataBaseOP.Controllers
         {
             dataGridView.DataSource = Context.GetAllTrademarks();
 
-            SetLinkCellsCommands(dataGridView, 4);
+            SetLinkCellsCommands(dataGridView, dataGridView.ColumnCount - 1);
+        }
+
+        public int GetTrademarkIdByName(string trademarkName)
+        {
+            return Context.GetTrademarkIdByName(trademarkName);
         }
     }
 }

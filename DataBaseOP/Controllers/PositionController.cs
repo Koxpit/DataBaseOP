@@ -1,11 +1,4 @@
-﻿using DataBaseOP.Database;
-using DataBaseOP.Database.Entities;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataBaseOP.Database.Entities;
 using System.Windows.Forms;
 
 namespace DataBaseOP.Controllers
@@ -30,8 +23,6 @@ namespace DataBaseOP.Controllers
         public void GetAllPositions(ref DataGridView dataGridView)
         {
             dataGridView.DataSource = Context.GetAllPositions();
-
-            SetLinkCellsCommands(dataGridView, 2);
         }
     }
 }

@@ -346,7 +346,7 @@ GO
 GO
 CREATE PROCEDURE sp_GetAllPositions
 AS
-SELECT ID, Name AS 'Наименование', 'Удалить' AS [Операция]
+SELECT ID, Name AS 'Наименование'
 FROM Position
 GO
 
@@ -374,7 +374,7 @@ GO
 GO
 CREATE PROCEDURE sp_GetAllWorkers
 AS
-SELECT Worker.ID, FIO AS 'ФИО', Phone AS 'Телефон', Position.Name AS 'Должность', 'Удалить' AS [Операция]
+SELECT Worker.ID, FIO AS 'ФИО', Phone AS 'Телефон', Position.Name AS 'Должность'
 FROM Worker
 JOIN Position ON Worker.PositionID = Position.ID
 GO
@@ -396,8 +396,7 @@ CREATE PROCEDURE sp_GetAllRealizations
 AS
 SELECT 
 Realization.ID, Number AS 'Номер договора', RealizeDate AS 'Срок реализации', 
-Supplier.FIO AS 'ФИО поставщика', Supplier.Phone AS 'Телефон поставщика', 
-Worker.FIO AS 'ФИО работника', Worker.Phone AS 'Телефон работника', 
+Supplier.Phone AS 'Телефон поставщика', Worker.Phone AS 'Телефон работника', 
 Realization.Cost AS 'Стоимость', Discount AS 'Скидка (%)', AmountDue AS 'Сумма к оплате', PaidOf AS 'Оплачено', Change AS 'Сдача', 
 AmountProducts AS 'Кол-во продукции', Product.Name AS 'Наименование продукта', Realized AS 'Реализовано', 'Удалить' AS [Операция]
 FROM Realization
@@ -477,6 +476,15 @@ AS
 SELECT ID
 FROM Product
 WHERE Name = @Name
+GO
+
+GO
+CREATE PROCEDURE sp_GetRealizationIdByNumber
+@Number NVARCHAR(8)
+AS
+SELECT ID
+FROM Realization
+WHERE Number = @Number
 GO
 
 -- Supplier - поставщик, Trademark - бренд.
