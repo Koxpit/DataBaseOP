@@ -39,7 +39,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.OneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TwoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exit = new System.Windows.Forms.Button();
+            this.ExitToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.Client = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -154,13 +155,15 @@
             this.menuStrip1.BackColor = System.Drawing.Color.Maroon;
             this.menuStrip1.BackgroundImage = global::DataBaseOP.Properties.Resources.tekstura_tasc;
             this.menuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.menuStrip1.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.menuStrip1.Font = new System.Drawing.Font("Times New Roman", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.OneToolStripMenuItem,
-            this.TwoToolStripMenuItem});
+            this.TwoToolStripMenuItem,
+            this.ExitToolStripMenuItem2});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(931, 32);
+            this.menuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.menuStrip1.Size = new System.Drawing.Size(931, 39);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -169,7 +172,7 @@
             this.OneToolStripMenuItem.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.OneToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.OneToolStripMenuItem.Name = "OneToolStripMenuItem";
-            this.OneToolStripMenuItem.Size = new System.Drawing.Size(173, 28);
+            this.OneToolStripMenuItem.Size = new System.Drawing.Size(173, 35);
             this.OneToolStripMenuItem.Text = "Отчёт за период";
             this.OneToolStripMenuItem.Click += new System.EventHandler(this.OneToolStripMenuItem_Click);
             // 
@@ -178,25 +181,35 @@
             this.TwoToolStripMenuItem.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.TwoToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.TwoToolStripMenuItem.Name = "TwoToolStripMenuItem";
-            this.TwoToolStripMenuItem.Size = new System.Drawing.Size(151, 28);
+            this.TwoToolStripMenuItem.Size = new System.Drawing.Size(151, 35);
             this.TwoToolStripMenuItem.Text = "О Программе";
             this.TwoToolStripMenuItem.Click += new System.EventHandler(this.TwoToolStripMenuItem_Click);
             // 
-            // exit
+            // ExitToolStripMenuItem2
             // 
-            this.exit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.exit.BackgroundImage = global::DataBaseOP.Properties.Resources.buttons_PNG51;
-            this.exit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.exit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.exit.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.exit.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.exit.Location = new System.Drawing.Point(700, 381);
-            this.exit.Name = "exit";
-            this.exit.Size = new System.Drawing.Size(223, 101);
-            this.exit.TabIndex = 8;
-            this.exit.Text = "Выход";
-            this.exit.UseVisualStyleBackColor = false;
-            this.exit.Click += new System.EventHandler(this.exit_Click);
+            this.ExitToolStripMenuItem2.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.ExitToolStripMenuItem2.ImageTransparentColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.ExitToolStripMenuItem2.Margin = new System.Windows.Forms.Padding(485, 0, 0, 0);
+            this.ExitToolStripMenuItem2.Name = "ExitToolStripMenuItem2";
+            this.ExitToolStripMenuItem2.Size = new System.Drawing.Size(104, 35);
+            this.ExitToolStripMenuItem2.Text = "Выход";
+            this.ExitToolStripMenuItem2.Click += new System.EventHandler(this.ExitToolStripMenuItem2_Click);
+            // 
+            // Client
+            // 
+            this.Client.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Client.BackgroundImage = global::DataBaseOP.Properties.Resources.buttons_PNG51;
+            this.Client.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Client.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.Client.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Client.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.Client.Location = new System.Drawing.Point(700, 381);
+            this.Client.Name = "Client";
+            this.Client.Size = new System.Drawing.Size(223, 101);
+            this.Client.TabIndex = 8;
+            this.Client.Text = "Клиенты";
+            this.Client.UseVisualStyleBackColor = false;
+            this.Client.Click += new System.EventHandler(this.Client_Click);
             // 
             // label1
             // 
@@ -215,11 +228,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Maroon;
-            this.BackgroundImage = global::DataBaseOP.Properties.Resources.tecstura3;
+            this.BackgroundImage = global::DataBaseOP.Properties.Resources.tekstura;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(931, 490);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.exit);
+            this.Controls.Add(this.Client);
             this.Controls.Add(this.Category);
             this.Controls.Add(this.Supplier);
             this.Controls.Add(this.Realization);
@@ -256,9 +269,10 @@
         private System.Windows.Forms.Button Category;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem OneToolStripMenuItem;
-        private System.Windows.Forms.Button exit;
+        private System.Windows.Forms.Button Client;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem TwoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem2;
     }
 }
 

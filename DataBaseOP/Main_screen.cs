@@ -29,9 +29,10 @@ namespace DataBaseOP
                 e.Cancel = true;
         }
 
-        private void exit_Click(object sender, EventArgs e)
+        private void Client_Click(object sender, EventArgs e)
         {
-                this.Close();
+            ClientForm newForm = new ClientForm();
+            newForm.Show();
         }
 
         private void Worker_Click(object sender, EventArgs e)
@@ -87,5 +88,11 @@ namespace DataBaseOP
             AboutBox newForm = new AboutBox();
             newForm.Show();
         }
+
+        private void ExitToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }
