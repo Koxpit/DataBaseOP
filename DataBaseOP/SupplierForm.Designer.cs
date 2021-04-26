@@ -35,6 +35,7 @@ namespace DataBaseOP
             // 
             // dataGridViewSuppliers
             // 
+            this.dataGridViewSuppliers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.dataGridViewSuppliers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewSuppliers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewSuppliers.Location = new System.Drawing.Point(0, 0);

@@ -102,6 +102,12 @@
     <Compile Include="RealizationForm.Designer.cs">
       <DependentUpon>RealizationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Report.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report.Designer.cs">
+      <DependentUpon>Report.cs</DependentUpon>
+    </Compile>
     <Compile Include="SupplierForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +154,9 @@
     <EmbeddedResource Include="RealizationForm.resx">
       <DependentUpon>RealizationForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Report.resx">
+      <DependentUpon>Report.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SupplierForm.resx">
       <DependentUpon>SupplierForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -175,6 +184,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\buttons_PNG51.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\screen-Rep.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\screen tasc.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tekstura tasc.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tekstura1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tekstura2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tecstura3.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

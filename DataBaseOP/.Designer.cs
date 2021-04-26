@@ -38,6 +38,7 @@
             this.Category = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.OneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TwoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exit = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
@@ -49,7 +50,7 @@
             this.Worker.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Worker.BackgroundImage")));
             this.Worker.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Worker.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Worker.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Worker.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Worker.Location = new System.Drawing.Point(13, 381);
             this.Worker.Name = "Worker";
             this.Worker.Size = new System.Drawing.Size(223, 101);
@@ -64,7 +65,7 @@
             this.Position.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Position.BackgroundImage")));
             this.Position.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Position.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Position.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Position.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Position.Location = new System.Drawing.Point(13, 274);
             this.Position.Name = "Position";
             this.Position.Size = new System.Drawing.Size(223, 101);
@@ -79,7 +80,7 @@
             this.Trademark.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Trademark.BackgroundImage")));
             this.Trademark.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Trademark.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Trademark.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Trademark.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Trademark.Location = new System.Drawing.Point(242, 274);
             this.Trademark.Name = "Trademark";
             this.Trademark.Size = new System.Drawing.Size(223, 101);
@@ -94,7 +95,7 @@
             this.Product.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Product.BackgroundImage")));
             this.Product.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Product.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Product.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Product.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Product.Location = new System.Drawing.Point(242, 381);
             this.Product.Name = "Product";
             this.Product.Size = new System.Drawing.Size(223, 101);
@@ -109,7 +110,7 @@
             this.Realization.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Realization.BackgroundImage")));
             this.Realization.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Realization.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Realization.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Realization.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Realization.Location = new System.Drawing.Point(471, 274);
             this.Realization.Name = "Realization";
             this.Realization.Size = new System.Drawing.Size(223, 101);
@@ -124,7 +125,7 @@
             this.Supplier.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Supplier.BackgroundImage")));
             this.Supplier.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Supplier.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Supplier.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Supplier.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Supplier.Location = new System.Drawing.Point(471, 381);
             this.Supplier.Name = "Supplier";
             this.Supplier.Size = new System.Drawing.Size(223, 101);
@@ -139,7 +140,7 @@
             this.Category.BackgroundImage = global::DataBaseOP.Properties.Resources.buttons_PNG51;
             this.Category.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Category.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Category.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Category.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Category.Location = new System.Drawing.Point(700, 274);
             this.Category.Name = "Category";
             this.Category.Size = new System.Drawing.Size(223, 101);
@@ -151,22 +152,35 @@
             // menuStrip1
             // 
             this.menuStrip1.BackColor = System.Drawing.Color.Maroon;
-            this.menuStrip1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.menuStrip1.BackgroundImage = global::DataBaseOP.Properties.Resources.tekstura_tasc;
+            this.menuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.menuStrip1.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.OneToolStripMenuItem});
+            this.OneToolStripMenuItem,
+            this.TwoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(934, 29);
+            this.menuStrip1.Size = new System.Drawing.Size(931, 32);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // OneToolStripMenuItem
             // 
-            this.OneToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Control;
+            this.OneToolStripMenuItem.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.OneToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.OneToolStripMenuItem.Name = "OneToolStripMenuItem";
-            this.OneToolStripMenuItem.Size = new System.Drawing.Size(127, 25);
-            this.OneToolStripMenuItem.Text = "О Программе";
+            this.OneToolStripMenuItem.Size = new System.Drawing.Size(173, 28);
+            this.OneToolStripMenuItem.Text = "Отчёт за период";
             this.OneToolStripMenuItem.Click += new System.EventHandler(this.OneToolStripMenuItem_Click);
+            // 
+            // TwoToolStripMenuItem
+            // 
+            this.TwoToolStripMenuItem.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.TwoToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.TwoToolStripMenuItem.Name = "TwoToolStripMenuItem";
+            this.TwoToolStripMenuItem.Size = new System.Drawing.Size(151, 28);
+            this.TwoToolStripMenuItem.Text = "О Программе";
+            this.TwoToolStripMenuItem.Click += new System.EventHandler(this.TwoToolStripMenuItem_Click);
             // 
             // exit
             // 
@@ -174,7 +188,7 @@
             this.exit.BackgroundImage = global::DataBaseOP.Properties.Resources.buttons_PNG51;
             this.exit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.exit.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.exit.Font = new System.Drawing.Font("Times New Roman", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.exit.ForeColor = System.Drawing.SystemColors.MenuText;
             this.exit.Location = new System.Drawing.Point(700, 381);
             this.exit.Name = "exit";
@@ -188,11 +202,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Font = new System.Drawing.Font("Times New Roman", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(12, 130);
+            this.label1.Location = new System.Drawing.Point(43, 120);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(915, 42);
+            this.label1.Size = new System.Drawing.Size(834, 42);
             this.label1.TabIndex = 9;
             this.label1.Text = "База данных для предприятия оптовой торговли";
             // 
@@ -201,9 +215,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Maroon;
-            this.BackgroundImage = global::DataBaseOP.Properties.Resources.tekstura;
+            this.BackgroundImage = global::DataBaseOP.Properties.Resources.tecstura3;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(934, 502);
+            this.ClientSize = new System.Drawing.Size(931, 490);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.exit);
             this.Controls.Add(this.Category);
@@ -244,6 +258,7 @@
         private System.Windows.Forms.ToolStripMenuItem OneToolStripMenuItem;
         private System.Windows.Forms.Button exit;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripMenuItem TwoToolStripMenuItem;
     }
 }
 

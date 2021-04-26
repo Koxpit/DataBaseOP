@@ -118,10 +118,28 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="tekstura" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tekstura.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="screen-Rep" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\screen-Rep.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="buttons_PNG51" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\buttons_PNG51.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tekstura" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tekstura.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tekstura tasc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tekstura tasc.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="screen tasc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\screen tasc.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tekstura2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tekstura2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tekstura1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tekstura1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tecstura3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tecstura3.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

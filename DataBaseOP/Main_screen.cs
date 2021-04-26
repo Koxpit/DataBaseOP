@@ -78,6 +78,12 @@ namespace DataBaseOP
 
         private void OneToolStripMenuItem_Click(object sender, EventArgs e)
         {
+           Report newForm = new Report();
+            newForm.Show();
+        }
+
+        private void TwoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             AboutBox newForm = new AboutBox();
             newForm.Show();
         }

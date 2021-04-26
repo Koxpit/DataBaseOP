@@ -51,3 +51,4 @@ C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.csproj.Genera
 C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.csproj.CoreCompileInputs.cache
 C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.exe
 C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.pdb
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Report.resources
