@@ -1,4 +1,5 @@
 ﻿using DataBaseOP.Controllers;
+using DataBaseOP.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,6 +32,11 @@ namespace DataBaseOP
             {
                 MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void экспортВExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExcelService.ExportToExcel(dataGridViewWorkers, this.Text);
         }
     }
 }

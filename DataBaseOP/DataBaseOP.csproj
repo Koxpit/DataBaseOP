@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -67,14 +71,17 @@
     </Compile>
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RealizationController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\TrademarkController.cs" />
     <Compile Include="Controllers\WorkerController.cs" />
     <Compile Include="Database\DataBaseOPContext.cs" />
     <Compile Include="Database\Entities\Category.cs" />
+    <Compile Include="Database\Entities\Client.cs" />
     <Compile Include="Database\Entities\Position.cs" />
     <Compile Include="Database\Entities\Product.cs" />
     <Compile Include="Database\Entities\Realization.cs" />
@@ -114,6 +121,7 @@
     <Compile Include="Report.Designer.cs">
       <DependentUpon>Report.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\ExcelService.cs" />
     <Compile Include="SupplierForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +134,8 @@
     <Compile Include="TrademarkForm.Designer.cs">
       <DependentUpon>TrademarkForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ProductEntitiesIDsVM.cs" />
+    <Compile Include="ViewModels\RealizationEntitiesIDsVM.cs" />
     <Compile Include="WorkerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +185,7 @@
     <EmbeddedResource Include="WorkerForm.resx">
       <DependentUpon>WorkerForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

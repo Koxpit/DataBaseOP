@@ -1,16 +1,12 @@
 ﻿using DataBaseOP.Database;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DataBaseOP.Controllers
 {
-    abstract class BaseController
+    public abstract class BaseController
     {
-        public DataBaseOPContext Context { get; } = DataBaseOPContext.GetContext;
+        protected DataBaseOPContext Context { get; } = DataBaseOPContext.GetContext;
 
         public void SetLinkCellsCommands(DataGridView dataGridView, int columnId)
         {

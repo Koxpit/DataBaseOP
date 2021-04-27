@@ -3,10 +3,11 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using DataBaseOP.Database.Entities;
+using DataBaseOP.ViewModels;
 
 namespace DataBaseOP.Database
 {
-    class DataBaseOPContext
+    public class DataBaseOPContext
     {
         private static readonly DataBaseOPContext context = new DataBaseOPContext();
         public static DataBaseOPContext GetContext => context;
@@ -250,9 +251,8 @@ namespace DataBaseOP.Database
                 dataTable = new DataTable();
 
                 dataTable.Load(reader);
-                dataTable.Columns[2].ReadOnly = false;
-                dataTable.Columns[3].ReadOnly = false;
-                dataTable.Columns[4].ReadOnly = false;
+                for (int i = 2; i < dataTable.Columns.Count; i++)
+                    dataTable.Columns[i].ReadOnly = false;
 
                 connection.Close();
             }
@@ -347,9 +347,8 @@ namespace DataBaseOP.Database
                 dataTable = new DataTable();
 
                 dataTable.Load(reader);
-                dataTable.Columns[2].ReadOnly = false;
-                dataTable.Columns[3].ReadOnly = false;
-                dataTable.Columns[4].ReadOnly = false;
+                for (int i = 2; i < dataTable.Columns.Count; i++)
+                    dataTable.Columns[i].ReadOnly = false;
 
                 connection.Close();
             }
@@ -376,6 +375,102 @@ namespace DataBaseOP.Database
             }
 
             return trademarkId;
+        }
+
+
+
+        // TRADEMARK COMMANDS
+
+        public void AddClient(Client client)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                Client updatedClient = client;
+                string fio = updatedClient.FIO;
+                string phone = updatedClient.Phone;
+                string address = updatedClient.Address;
+
+                SqlCommand command = new SqlCommand("sp_InsertClient", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@FIO", fio);
+                command.Parameters.AddWithValue("@Phone", phone);
+                command.Parameters.AddWithValue("@Address", address);
+
+                command.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
+
+        public void EditClient(Client client)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                Client updatedClient = client;
+                int id = updatedClient.ID;
+                string fio = updatedClient.FIO;
+                string phone = updatedClient.Phone;
+                string address = updatedClient.Address;
+
+                SqlCommand command = new SqlCommand("sp_UpdateClient", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@ID", id);
+                command.Parameters.AddWithValue("@FIO", fio);
+                command.Parameters.AddWithValue("@Phone", phone);
+                command.Parameters.AddWithValue("@Address", address);
+
+                command.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
+
+        public DataTable GetAllClients()
+        {
+            DataTable dataTable;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_GetAllClients", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                SqlDataReader reader = command.ExecuteReader();
+                dataTable = new DataTable();
+
+                dataTable.Load(reader);
+                for (int i = 2; i < dataTable.Columns.Count; i++)
+                    dataTable.Columns[i].ReadOnly = false;
+
+                connection.Close();
+            }
+
+            return dataTable;
+        }
+
+        public int GetClientIdByPhone(string clientPhone)
+        {
+            int clientId = 0;
+            string phone = clientPhone;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_GetClientIdByPhone", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("Phone", phone);
+
+                clientId = Convert.ToInt32(command.ExecuteScalar());
+
+                connection.Close();
+            }
+
+            return clientId;
         }
 
 
@@ -436,18 +531,8 @@ namespace DataBaseOP.Database
                 dataTable = new DataTable();
 
                 dataTable.Load(reader);
-                dataTable.Columns[2].ReadOnly = false;
-                dataTable.Columns[3].ReadOnly = false;
-                dataTable.Columns[4].ReadOnly = false;
-                dataTable.Columns[5].ReadOnly = false;
-                dataTable.Columns[6].ReadOnly = false;
-                dataTable.Columns[7].ReadOnly = false;
-                dataTable.Columns[8].ReadOnly = false;
-                dataTable.Columns[9].ReadOnly = false;
-                dataTable.Columns[10].ReadOnly = false;
-                dataTable.Columns[11].ReadOnly = false;
-                dataTable.Columns[12].ReadOnly = false;
-                dataTable.Columns[13].ReadOnly = false;
+                for (int i = 2; i < dataTable.Columns.Count; i++)
+                    dataTable.Columns[i].ReadOnly = false;
 
                 connection.Close();
             }
@@ -557,13 +642,8 @@ namespace DataBaseOP.Database
                 dataTable = new DataTable();
 
                 dataTable.Load(reader);
-                dataTable.Columns[2].ReadOnly = false;
-                dataTable.Columns[3].ReadOnly = false;
-                dataTable.Columns[4].ReadOnly = false;
-                dataTable.Columns[5].ReadOnly = false;
-                dataTable.Columns[6].ReadOnly = false;
-                dataTable.Columns[7].ReadOnly = false;
-                dataTable.Columns[8].ReadOnly = false;
+                for (int i = 2; i < dataTable.Columns.Count; i++)
+                    dataTable.Columns[i].ReadOnly = false;
 
                 connection.Close();
             }
@@ -683,6 +763,33 @@ namespace DataBaseOP.Database
             }
 
             return workerId;
+        }
+
+
+
+        // REPORTS
+
+        public DataTable GetRealizationsResult(DateTime beginDate, DateTime endDate)
+        {
+            DataTable dataTable;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_GetRealizationsResult", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("@BeginDate", SqlDbType.Date).Value = beginDate;
+                command.Parameters.Add("@EndDate", SqlDbType.Date).Value = endDate;
+                SqlDataReader reader = command.ExecuteReader();
+                dataTable = new DataTable();
+
+                dataTable.Load(reader);
+
+                connection.Close();
+            }
+
+            return dataTable;
         }
     }
 }

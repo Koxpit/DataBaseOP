@@ -14,6 +14,9 @@ namespace DataBaseOP.Database.Entities
         public decimal Change { get; set; }
         public int AmountProducts { get; set; }
         public bool Realized { get; set; }
+
+        public int ClientID { get; set; }
+        public Client Client { get; set; }
         
         public int SupplierID { get; set; }
         public Supplier Supplier { get; set; }

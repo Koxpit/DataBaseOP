@@ -1,5 +1,7 @@
 ﻿using DataBaseOP.Controllers;
 using DataBaseOP.Database.Entities;
+using DataBaseOP.Services;
+using DataBaseOP.ViewModels;
 using System;
 using System.Windows.Forms;
 
@@ -11,15 +13,19 @@ namespace DataBaseOP
         private readonly ProductController productController;
         private readonly WorkerController workerController;
         private readonly SupplierController supplierController;
+        private readonly ClientController clientController;
+
         private bool newRowAdding = false;
 
         public RealizationForm()
         {
             InitializeComponent();
+
             realizationController = new RealizationController();
             productController = new ProductController();
             workerController = new WorkerController();
             supplierController = new SupplierController();
+            clientController = new ClientController();
         }
 
         private void RealizationForm_Load(object sender, EventArgs e)
@@ -54,7 +60,9 @@ namespace DataBaseOP
                     }
                     else if (task == "Добавить")
                     {
-                        Realization newRealization = GetNewRealization();
+                        int rowIndex = dataGridViewRealizations.Rows.Count - 2;
+                        DataGridViewRow currentRow = dataGridViewRealizations.Rows[rowIndex];
+                        Realization newRealization = GetRealizationInfo(ref currentRow);
 
                         if (newRealization != null)
                         {
@@ -65,13 +73,13 @@ namespace DataBaseOP
                     else if (task == "Изм.")
                     {
                         int rowIndex = e.RowIndex;
-                        DataGridViewRow row = dataGridViewRealizations.Rows[rowIndex];
-                        Realization updatedRealiaztion = GetUpdatedRealization(row);
+                        DataGridViewRow currentRow = dataGridViewRealizations.Rows[rowIndex];
+                        Realization updatedRealiaztion = GetRealizationInfo(ref currentRow);
 
                         if (updatedRealiaztion != null)
                         {
                             realizationController.Edit(updatedRealiaztion);
-                            row.Cells["Операция"].Value = "Удалить";
+                            currentRow.Cells["Операция"].Value = "Удалить";
                         }
                     }
 
@@ -84,56 +92,69 @@ namespace DataBaseOP
             }
         }
 
-        private Realization GetNewRealization()
+        private Realization GetRealizationInfo(ref DataGridViewRow currentRow)
         {
-            int rowIndex = dataGridViewRealizations.Rows.Count - 2;
-            DataGridViewRow row = dataGridViewRealizations.Rows[rowIndex];
+            RealizationEntitiesIDsVM realizationViewModel = new RealizationEntitiesIDsVM()
+            {
+                ClientID = clientController.GetClientIdByPhone(currentRow.Cells["Телефон заказчика"].Value.ToString()),
+                SupplierID = supplierController.GetSupplierIdByPhone(currentRow.Cells["Телефон поставщика"].Value.ToString()),
+                RealizationID = realizationController.GetRealizationIdByNumber(currentRow.Cells["Номер договора"].Value.ToString()),
+                SeniorID = workerController.GetWorkerIdByPhone(currentRow.Cells["Телефон работника"].Value.ToString()),
+                ProductID = productController.GetProductIdByName(currentRow.Cells["Наименование продукта"].Value.ToString())
+            };
 
-            int supplierId = supplierController.GetSupplierIdByPhone(row.Cells["Телефон поставщика"].Value.ToString());
-            int realizationId = realizationController.GetRealizationIdByNumber(row.Cells["Номер договора"].Value.ToString());
-            int seniorId = workerController.GetWorkerIdByPhone(row.Cells["Телефон работника"].Value.ToString());
-            int productId = productController.GetProductIdByName(row.Cells["Наименование продукта"].Value.ToString());
-
-            if (AddHandleNotOK(supplierId, realizationId, seniorId, productId))
+            if (GetInfoHandleNotOK(realizationViewModel))
                 MessageBox.Show("Операция не удалась", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else 
                 return null;
 
-            string number = row.Cells["Номер договора"].Value.ToString();
-            if (number.Length > 8)
+            string currentNumberRealization = currentRow.Cells["Номер договора"].Value.ToString();
+            if (currentNumberRealization.Length > 8)
             {
                 MessageBox.Show("Номер договора не должен превышать больше 8 символов");
                 return null;
             }
-            else if (number.Length < 8)
-                CreateNumberRealization(ref number);
+            else if (currentNumberRealization.Length < 8)
+                CreateNumberRealization(ref currentNumberRealization);
 
-            decimal change = GetChange((decimal)row.Cells["Оплачено"].Value, (decimal)row.Cells["Сумма к оплате"].Value);
-            decimal amountDue = GetAmountDue((decimal)row.Cells["Стоимость"].Value, (int)row.Cells["Скидка (%)"].Value);
+            decimal change = GetChange((decimal)currentRow.Cells["Оплачено"].Value, (decimal)currentRow.Cells["Сумма к оплате"].Value);
+            decimal amountDue = GetAmountDue((decimal)currentRow.Cells["Стоимость"].Value, (int)currentRow.Cells["Скидка (%)"].Value);
 
-            Realization newRealization = new Realization
+            Realization realization = new Realization
             {
-                Number = number,
-                RealizeDate = Convert.ToDateTime(row.Cells["Срок реализации"].Value),
-                Cost = (decimal)row.Cells["Стоимость"].Value,
-                Discount = (int)row.Cells["Скидка (%)"].Value,
+                ID = (int)currentRow.Cells["ID"].Value,
+                Number = currentNumberRealization,
+                RealizeDate = Convert.ToDateTime(currentRow.Cells["Срок реализации"].Value),
+                Cost = (decimal)currentRow.Cells["Стоимость"].Value,
+                Discount = (int)currentRow.Cells["Скидка (%)"].Value,
                 AmountDue = amountDue,
-                PaidOf = (decimal)row.Cells["Оплачено"].Value,
+                PaidOf = (decimal)currentRow.Cells["Оплачено"].Value,
                 Change = change,
-                AmountProducts = (int)row.Cells["Кол-во продукции"].Value,
-                Realized = (bool)row.Cells["Реализовано"].Value,
-                SupplierID = supplierId,
-                SeniorID = seniorId,
-                ProductID = productId
+                AmountProducts = (int)currentRow.Cells["Кол-во продукции"].Value,
+                Realized = (bool)currentRow.Cells["Реализовано"].Value,
+                ClientID = realizationViewModel.ClientID,
+                SupplierID = realizationViewModel.SupplierID,
+                SeniorID = realizationViewModel.SeniorID,
+                ProductID = realizationViewModel.ProductID
             };
 
-            return newRealization;
+            return realization;
         }
 
-        private bool AddHandleNotOK(int supplierId, int realizationId, int seniorId, int productId)
+        private bool GetInfoHandleNotOK(RealizationEntitiesIDsVM realizationViewModel)
         {
             bool handleOK = true;
+            int clientId = realizationViewModel.ClientID;
+            int supplierId = realizationViewModel.SupplierID;
+            int realizationId = realizationViewModel.RealizationID;
+            int seniorId = realizationViewModel.SeniorID;
+            int productId = realizationViewModel.ProductID;
 
+            if (clientId == 0)
+            {
+                MessageBox.Show("Поставщик не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                handleOK = false;
+            }
             if (supplierId == 0)
             {
                 MessageBox.Show("Поставщик не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -179,51 +200,6 @@ namespace DataBaseOP
             return cost - cost * (discount / 100);
         }
 
-        private Realization GetUpdatedRealization(DataGridViewRow currentRow)
-        {
-            DataGridViewRow row = currentRow;
-            int supplierId = supplierController.GetSupplierIdByPhone(row.Cells["Телефон поставщика"].Value.ToString());
-            int realizationId = realizationController.GetRealizationIdByNumber(row.Cells["Номер договора"].Value.ToString());
-            int seniorId = workerController.GetWorkerIdByPhone(row.Cells["Телефон работника"].Value.ToString());
-            int productId = productController.GetProductIdByName(row.Cells["Наименование продукта"].Value.ToString());
-
-            if (AddHandleNotOK(supplierId, realizationId, seniorId, productId))
-                MessageBox.Show("Операция не удалась", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else
-                return null;
-
-            string number = row.Cells["Номер договора"].Value.ToString();
-            if (number.Length > 8)
-            {
-                MessageBox.Show("Номер договора не должен превышать больше 8 символов");
-                return null;
-            }
-            else if (number.Length < 8)
-                CreateNumberRealization(ref number);
-
-            decimal change = GetChange((decimal)row.Cells["Оплачено"].Value, (decimal)row.Cells["Сумма к оплате"].Value);
-            decimal amountDue = GetAmountDue((decimal)row.Cells["Стоимость"].Value, (int)row.Cells["Скидка (%)"].Value);
-
-            Realization updatedRealiation = new Realization
-            {
-                ID = (int)row.Cells["ID"].Value,
-                Number = number,
-                RealizeDate = Convert.ToDateTime(row.Cells["Срок реализации"].Value),
-                Cost = (decimal)row.Cells["Стоимость"].Value,
-                Discount = (int)row.Cells["Скидка (%)"].Value,
-                AmountDue = amountDue,
-                PaidOf = (decimal)row.Cells["Оплачено"].Value,
-                Change = change,
-                AmountProducts = (int)row.Cells["Кол-во продукции"].Value,
-                Realized = (bool)row.Cells["Реализовано"].Value,
-                SupplierID = supplierId,
-                SeniorID = seniorId,
-                ProductID = productId
-            };
-
-            return updatedRealiation;
-        }
-
         private void dataGridViewRealizations_UserAddedRow(object sender, DataGridViewRowEventArgs e)
         {
             try
@@ -234,7 +210,7 @@ namespace DataBaseOP
                     int lastRow = dataGridViewRealizations.Rows.Count - 2;
                     DataGridViewRow row = dataGridViewRealizations.Rows[lastRow];
                     DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
-                    dataGridViewRealizations[13, lastRow] = linkCell;
+                    dataGridViewRealizations[row.Cells["Операция"].ColumnIndex, lastRow] = linkCell;
 
                     row.Cells["Операция"].Value = "Добавить";
                 }
@@ -255,7 +231,7 @@ namespace DataBaseOP
                     DataGridViewRow editingRow = dataGridViewRealizations.Rows[rowIndex];
 
                     DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
-                    dataGridViewRealizations[13, rowIndex] = linkCell;
+                    dataGridViewRealizations[editingRow.Cells["Операция"].ColumnIndex, rowIndex] = linkCell;
                     editingRow.Cells["Операция"].Value = "Изм.";
                 }
             }
@@ -286,6 +262,11 @@ namespace DataBaseOP
             {
                 e.Handled = true;
             }
+        }
+
+        private void экспортВExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExcelService.ExportToExcel(dataGridViewRealizations, this.Text);
         }
     }
 }

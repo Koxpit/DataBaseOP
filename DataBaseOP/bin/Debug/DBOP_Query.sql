@@ -9,6 +9,14 @@ ID INT PRIMARY KEY IDENTITY,
 Name NVARCHAR(50) NOT NULL UNIQUE
 );
 
+CREATE TABLE Client
+(
+ID INT PRIMARY KEY IDENTITY,
+FIO NVARCHAR(100) NOT NULL,
+Phone NVARCHAR(11) NOT NULL UNIQUE,
+Address NVARCHAR(200) NOT NULL,
+);
+
 CREATE TABLE Worker
 (
 ID INT PRIMARY KEY IDENTITY,
@@ -56,6 +64,7 @@ CREATE TABLE Realization
 ID INT PRIMARY KEY IDENTITY,
 Number NVARCHAR(8) NOT NULL UNIQUE,
 RealizeDate DATE NOT NULL,
+ClientID INT REFERENCES Client(ID),
 SupplierID INT REFERENCES Supplier(ID),
 SeniorID INT REFERENCES Worker(ID),
 Cost MONEY NOT NULL,
@@ -100,10 +109,16 @@ VALUES
 ('Рябов Борис Юрьевич', '475265, Саратовская область, город Видное, бульвар Косиора, 42', '74957705128'),
 ('Тихонов Феликс Игоревич', '057649, Калужская область, город Дмитров, шоссе Ломоносова, 89', '74957705199')
 
-INSERT INTO Realization (Number, RealizeDate, SupplierID, SeniorID, Cost, Discount, AmountDue, PaidOf, Change, AmountProducts, ProductID, Realized)
+INSERT INTO Client (FIO, Phone, Address)
 VALUES
-('00000001', '12.12.2020', 1, 1, 1200, 10, 1080, 1500, 420, 10, 1, 1), 
-('00000002', '12.03.2021', 2, 1, 800, 0, 800, 1000, 200, 10, 2, 1)
+('Пестов Афанасий Евсеевич', '74957705111', '947904, Калининградская область, город Луховицы, пер. Ломоносова, 07'),
+('Степанов Артем Владленович', '74953600899', '277529, Смоленская область, город Домодедово, пер. Домодедовская, 44')
+
+INSERT INTO Realization (Number, RealizeDate, ClientID, SupplierID, SeniorID, Cost, Discount, AmountDue, PaidOf, Change, AmountProducts, ProductID, Realized)
+VALUES
+('00000001', '12.12.2020', 1, 1, 1, 1200, 10, 1080, 1500, 420, 10, 1, 1), 
+('00000002', '12.03.2021', 2, 2, 1, 800, 0, 800, 1000, 200, 10, 2, 1)
+
 
 
 
@@ -123,6 +138,15 @@ CREATE PROCEDURE sp_InsertCategory
 @Name NVARCHAR(100)
 AS
 INSERT INTO Category (Name) VALUES (@Name)
+GO
+
+GO
+CREATE PROCEDURE sp_InsertClient
+@FIO NVARCHAR(100),
+@Phone NVARCHAR(11),
+@Address NVARCHAR(200)
+AS
+INSERT INTO Client (FIO, Phone, Address) VALUES (@FIO, @Phone, @Address)
 GO
 
 GO
@@ -206,6 +230,18 @@ CREATE PROCEDURE sp_UpdateCategory
 AS
 UPDATE Category
 SET Name = @Name
+WHERE ID = @ID
+GO
+
+GO
+CREATE PROCEDURE sp_UpdateClient
+@ID INT,
+@FIO NVARCHAR(100),
+@Phone NVARCHAR(11),
+@Address NVARCHAR(200)
+AS
+UPDATE Client
+SET FIO = @FIO, Phone = @Phone, Address = @Address
 WHERE ID = @ID
 GO
 
@@ -305,6 +341,13 @@ DELETE Category WHERE ID = @ID
 GO
 
 GO
+CREATE PROCEDURE sp_DeleteClient
+@ID INT
+AS
+DELETE Client WHERE ID = @ID
+GO
+
+GO
 CREATE PROCEDURE sp_DeleteWorker
 @ID INT
 AS
@@ -358,6 +401,13 @@ FROM Category
 GO
 
 GO
+CREATE PROCEDURE sp_GetAllClients
+AS
+SELECT ID, FIO AS 'ФИО', Phone AS 'Телефон', Address AS 'Адрес', 'Удалить' AS [Операция]
+FROM Client
+GO
+
+GO
 CREATE PROCEDURE sp_GetAllTrademarks
 AS
 SELECT ID, Name AS 'Наименование', Address AS 'Адрес', Phone AS 'Телефон', 'Удалить' AS [Операция]
@@ -396,23 +446,14 @@ CREATE PROCEDURE sp_GetAllRealizations
 AS
 SELECT 
 Realization.ID, Number AS 'Номер договора', RealizeDate AS 'Срок реализации', 
-Supplier.Phone AS 'Телефон поставщика', Worker.Phone AS 'Телефон работника', 
+Client.Phone AS 'Телефон заказчика', Supplier.Phone AS 'Телефон поставщика', Worker.Phone AS 'Телефон работника', 
 Realization.Cost AS 'Стоимость', Discount AS 'Скидка (%)', AmountDue AS 'Сумма к оплате', PaidOf AS 'Оплачено', Change AS 'Сдача', 
 AmountProducts AS 'Кол-во продукции', Product.Name AS 'Наименование продукта', Realized AS 'Реализовано', 'Удалить' AS [Операция]
 FROM Realization
 JOIN Supplier ON Realization.SupplierID = Supplier.ID
 JOIN Worker ON Realization.SeniorID = Worker.ID
 JOIN Product ON Realization.ProductID = Product.ID
-GO
-
-GO
-CREATE PROCEDURE sp_GetSumOfReceipt
-@BeginDate DATE,
-@EndDate DATE
-AS
-SELECT SUM(AmountDue) AS 'Выручка', SUM(Cost) AS 'Оборот'
-FROM Realization
-WHERE RealizeDate BETWEEN @BeginDate AND @EndDate
+JOIN Client ON Realization.ClientID = Client.ID
 GO
 
 GO
@@ -422,6 +463,15 @@ AS
 SELECT ID
 FROM Position
 WHERE Name = @Name
+GO
+
+GO
+CREATE PROCEDURE sp_GetClientIdByPhone
+@FIO NVARCHAR(100)
+AS
+SELECT ID
+FROM Client
+WHERE FIO = @FIO
 GO
 
 GO
@@ -485,6 +535,19 @@ AS
 SELECT ID
 FROM Realization
 WHERE Number = @Number
+GO
+
+
+-- REPORTS
+
+GO
+CREATE PROCEDURE sp_GetRealizationsResult
+@BeginDate NVARCHAR(20),
+@EndDate NVARCHAR(20)
+AS
+SELECT SUM(AmountDue) AS 'Выручка', SUM(Cost) AS 'Оборот'
+FROM Realization
+WHERE RealizeDate BETWEEN @BeginDate AND @EndDate
 GO
 
 -- Supplier - поставщик, Trademark - бренд.

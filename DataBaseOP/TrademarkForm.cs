@@ -1,5 +1,6 @@
 ﻿using DataBaseOP.Controllers;
 using DataBaseOP.Database.Entities;
+using DataBaseOP.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -56,14 +57,8 @@ namespace DataBaseOP
                     else if (task == "Добавить")
                     {
                         int rowIndex = dataGridViewTrademarks.Rows.Count - 2;
-                        DataGridViewRow row = dataGridViewTrademarks.Rows[rowIndex];
-
-                        Trademark newTrademark = new Trademark
-                        {
-                            Name = row.Cells["Наименование"].Value.ToString(),
-                            Address = row.Cells["Адрес"].Value.ToString(),
-                            Phone = row.Cells["Телефон"].Value.ToString()
-                        };
+                        DataGridViewRow currentRow = dataGridViewTrademarks.Rows[rowIndex];
+                        Trademark newTrademark = GetTrademarkInfo(currentRow);
 
                         trademarkController.Add(newTrademark);
                         dataGridViewTrademarks.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
@@ -71,18 +66,11 @@ namespace DataBaseOP
                     else if (task == "Изм.")
                     {
                         int rowIndex = e.RowIndex;
-                        DataGridViewRow row = dataGridViewTrademarks.Rows[rowIndex];
-
-                        Trademark updatedTrademark = new Trademark
-                        {
-                            ID = (int)row.Cells["ID"].Value,
-                            Name = row.Cells["Наименование"].Value.ToString(),
-                            Address = row.Cells["Адрес"].Value.ToString(),
-                            Phone = row.Cells["Телефон"].Value.ToString()
-                        };
+                        DataGridViewRow currentRow = dataGridViewTrademarks.Rows[rowIndex];
+                        Trademark updatedTrademark = GetTrademarkInfo(currentRow);
 
                         trademarkController.Edit(updatedTrademark);
-                        row.Cells["Операция"].Value = "Удалить";
+                        currentRow.Cells["Операция"].Value = "Удалить";
                     }
 
                     trademarkController.GetAllTrademarks(ref dataGridViewTrademarks);
@@ -92,6 +80,19 @@ namespace DataBaseOP
             {
                 MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private Trademark GetTrademarkInfo(DataGridViewRow currentRow)
+        {
+            Trademark trademark = new Trademark
+            {
+                ID = (int)currentRow.Cells["ID"].Value,
+                Name = currentRow.Cells["Наименование"].Value.ToString(),
+                Address = currentRow.Cells["Адрес"].Value.ToString(),
+                Phone = currentRow.Cells["Телефон"].Value.ToString()
+            };
+
+            return trademark;
         }
 
         private void dataGridViewTrademarks_UserAddedRow(object sender, DataGridViewRowEventArgs e)
@@ -156,6 +157,11 @@ namespace DataBaseOP
             {
                 e.Handled = true;
             }
+        }
+
+        private void экспортВExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExcelService.ExportToExcel(dataGridViewTrademarks, this.Text);
         }
     }
 }

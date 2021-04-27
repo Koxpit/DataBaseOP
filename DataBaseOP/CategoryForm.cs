@@ -1,5 +1,6 @@
 ﻿using DataBaseOP.Controllers;
 using DataBaseOP.Database.Entities;
+using DataBaseOP.Services;
 using System;
 using System.Windows.Forms;
 
@@ -45,31 +46,33 @@ namespace DataBaseOP
                 else if (task == "Добавить")
                 {
                     int rowIndex = dataGridViewCategories.Rows.Count - 2;
-
-                    Category newCategory = new Category
-                    {
-                        Name = dataGridViewCategories.Rows[rowIndex].Cells["Наименование"].Value.ToString()
-                    };
+                    Category newCategory = GetCategoryInfo(rowIndex);
 
                     categoryController.Add(newCategory);
-                    dataGridViewCategories.Rows[e.RowIndex].Cells[2].Value = "Удалить";
+                    dataGridViewCategories.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
                 }
                 else if (task == "Изм.")
                 {
                     int rowIndex = e.RowIndex;
-
-                    Category updatedCategory = new Category
-                    {
-                        ID = (int)dataGridViewCategories.CurrentRow.Cells[0].Value,
-                        Name = dataGridViewCategories.Rows[rowIndex].Cells["Наименование"].Value.ToString()
-                    };
+                    Category updatedCategory = GetCategoryInfo(rowIndex);
 
                     categoryController.Edit(updatedCategory);
-                    dataGridViewCategories.Rows[e.RowIndex].Cells[2].Value = "Удалить";
+                    dataGridViewCategories.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
                 }
 
                 categoryController.GetAllCategories(ref dataGridViewCategories);
             }
+        }
+
+        private Category GetCategoryInfo(int rowIndex)
+        {
+            Category category = new Category
+            {
+                ID = (int)dataGridViewCategories.CurrentRow.Cells[0].Value,
+                Name = dataGridViewCategories.Rows[rowIndex].Cells["Наименование"].Value.ToString()
+            };
+
+            return category;
         }
 
         private void dataGridViewCategories_UserAddedRow(object sender, DataGridViewRowEventArgs e)
@@ -82,7 +85,7 @@ namespace DataBaseOP
                     int lastRow = dataGridViewCategories.Rows.Count - 2;
                     DataGridViewRow row = dataGridViewCategories.Rows[lastRow];
                     DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
-                    dataGridViewCategories[2, lastRow] = linkCell;
+                    dataGridViewCategories[row.Cells["Операция"].ColumnIndex, lastRow] = linkCell;
 
                     row.Cells["Операция"].Value = "Добавить";
                 }
@@ -103,7 +106,7 @@ namespace DataBaseOP
                     DataGridViewRow editingRow = dataGridViewCategories.Rows[rowIndex];
 
                     DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
-                    dataGridViewCategories[2, rowIndex] = linkCell;
+                    dataGridViewCategories[editingRow.Cells["Операция"].ColumnIndex, rowIndex] = linkCell;
                     editingRow.Cells["Операция"].Value = "Изм.";
                 }
             }
@@ -134,6 +137,11 @@ namespace DataBaseOP
             {
                 e.Handled = true;
             }
+        }
+
+        private void экспортВExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExcelService.ExportToExcel(dataGridViewCategories, this.Text);
         }
     }
 }

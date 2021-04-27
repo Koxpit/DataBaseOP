@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataBaseOP.Controllers;
+using DataBaseOP.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +14,13 @@ namespace DataBaseOP
 {
     public partial class Report : Form
     {
+        private readonly ReportController reportController;
+
         public Report()
         {
             InitializeComponent();
+
+            reportController = new ReportController();
         }
 
         private void Report_Load(object sender, EventArgs e)
@@ -25,6 +31,37 @@ namespace DataBaseOP
         private void exit_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void экспортВExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ExcelService.ExportToExcel(dataGridViewReportResult, this.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Calculate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CalculateRealizationsResult(dateTimePickerBeginDate.Value.Date, dateTimePickerEndDate.Value.Date);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void CalculateRealizationsResult(DateTime beginDate, DateTime endDate)
+        {
+            DataTable reportResult = reportController.GetRealizationsResult(beginDate, endDate);
+
+            dataGridViewReportResult.DataSource = reportResult;
         }
     }
 }

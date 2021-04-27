@@ -68,6 +68,7 @@ namespace DataBaseOP
             this.экспортВExcelToolStripMenuItem.Name = "экспортВExcelToolStripMenuItem";
             this.экспортВExcelToolStripMenuItem.Size = new System.Drawing.Size(133, 23);
             this.экспортВExcelToolStripMenuItem.Text = "Экспорт в excel";
+            this.экспортВExcelToolStripMenuItem.Click += new System.EventHandler(this.экспортВExcelToolStripMenuItem_Click);
             // 
             // TrademarkForm
             // 

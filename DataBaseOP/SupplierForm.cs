@@ -56,33 +56,22 @@ namespace DataBaseOP
                     else if (task == "Добавить")
                     {
                         int rowIndex = dataGridViewSuppliers.Rows.Count - 2;
-                        DataGridViewRow row = dataGridViewSuppliers.Rows[rowIndex];
-
-                        Supplier newSupplier = new Supplier
-                        {
-                            FIO = row.Cells["ФИО"].Value.ToString(),
-                            Address = row.Cells["Адрес"].Value.ToString(),
-                            Phone = row.Cells["Телефон"].Value.ToString()
-                        };
+                        DataGridViewRow currentRow = dataGridViewSuppliers.Rows[rowIndex];
+                        Supplier newSupplier = GetSupplierInfo(currentRow);
 
                         supplierController.Add(newSupplier);
+
                         dataGridViewSuppliers.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
                     }
                     else if (task == "Изм.")
                     {
                         int rowIndex = e.RowIndex;
-                        DataGridViewRow row = dataGridViewSuppliers.Rows[rowIndex];
-
-                        Supplier updatedSupplier = new Supplier
-                        {
-                            ID = (int)row.Cells["ID"].Value,
-                            FIO = row.Cells["ФИО"].Value.ToString(),
-                            Address = row.Cells["Адрес"].Value.ToString(),
-                            Phone = row.Cells["Телефон"].Value.ToString()
-                        };
+                        DataGridViewRow currentRow = dataGridViewSuppliers.Rows[rowIndex];
+                        Supplier updatedSupplier = GetSupplierInfo(currentRow);
 
                         supplierController.Edit(updatedSupplier);
-                        row.Cells["Операция"].Value = "Удалить";
+
+                        currentRow.Cells["Операция"].Value = "Удалить";
                     }
 
                     supplierController.GetAllSuppliers(ref dataGridViewSuppliers);
@@ -92,6 +81,19 @@ namespace DataBaseOP
             {
                 MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private Supplier GetSupplierInfo(DataGridViewRow currentRow)
+        {
+            Supplier supplier = new Supplier
+            {
+                ID = (int)currentRow.Cells["ID"].Value,
+                FIO = currentRow.Cells["ФИО"].Value.ToString(),
+                Address = currentRow.Cells["Адрес"].Value.ToString(),
+                Phone = currentRow.Cells["Телефон"].Value.ToString()
+            };
+
+            return supplier;
         }
 
         private void dataGridViewSuppliers_UserAddedRow(object sender, DataGridViewRowEventArgs e)
@@ -104,7 +106,7 @@ namespace DataBaseOP
                     int lastRow = dataGridViewSuppliers.Rows.Count - 2;
                     DataGridViewRow row = dataGridViewSuppliers.Rows[lastRow];
                     DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
-                    dataGridViewSuppliers[4, lastRow] = linkCell;
+                    dataGridViewSuppliers[row.Cells["Операция"].ColumnIndex, lastRow] = linkCell;
 
                     row.Cells["Операция"].Value = "Добавить";
                 }
@@ -125,7 +127,7 @@ namespace DataBaseOP
                     DataGridViewRow editingRow = dataGridViewSuppliers.Rows[rowIndex];
 
                     DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
-                    dataGridViewSuppliers[4, rowIndex] = linkCell;
+                    dataGridViewSuppliers[editingRow.Cells["Операция"].ColumnIndex, rowIndex] = linkCell;
                     editingRow.Cells["Операция"].Value = "Изм.";
                 }
             }

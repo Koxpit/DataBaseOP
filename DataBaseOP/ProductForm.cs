@@ -1,5 +1,7 @@
 ﻿using DataBaseOP.Controllers;
 using DataBaseOP.Database.Entities;
+using DataBaseOP.Services;
+using DataBaseOP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -58,37 +60,8 @@ namespace DataBaseOP
                 else if (task == "Добавить")
                 {
                     int rowIndex = dataGridViewProducts.Rows.Count - 2;
-                    DataGridViewRow row = dataGridViewProducts.Rows[rowIndex];
-                    int productId = productController.GetProductIdByName(row.Cells["Наименование"].Value.ToString());
-                    int categoryId = categoryController.GetCategoryIdByName(row.Cells["Категория"].Value.ToString());
-                    int trademarkId = trademarkController.GetTrademarkIdByName(row.Cells["Бренд"].Value.ToString());
-
-                    if (productId != 0)
-                    {
-                        MessageBox.Show("Продукт уже существует", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    if (categoryId == 0)
-                    {
-                        MessageBox.Show("Категория не найдена", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    if (trademarkId == 0)
-                    {
-                        MessageBox.Show("Бренд не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    Product newProduct = new Product
-                    {
-                        Name = row.Cells["Наименование"].Value.ToString(),
-                        Amount = (int)row.Cells["Кол-во на складе"].Value,
-                        Unit = row.Cells["Ед.изм."].Value.ToString(),
-                        Cost = (decimal)row.Cells["Стоимость"].Value,
-                        Description = row.Cells["Описание"].Value.ToString(),
-                        CategoryID = categoryId,
-                        TrademarkID = trademarkId
-                    };
+                    DataGridViewRow currentRow = dataGridViewProducts.Rows[rowIndex];
+                    Product newProduct = GetProductInfo(ref currentRow);
 
                     productController.Add(newProduct);
                     dataGridViewProducts.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
@@ -96,28 +69,70 @@ namespace DataBaseOP
                 else if (task == "Изм.")
                 {
                     int rowIndex = e.RowIndex;
-                    DataGridViewRow row = dataGridViewProducts.Rows[rowIndex];
-                    int categoryId = categoryController.GetCategoryIdByName(row.Cells["Категория"].Value.ToString());
-                    int trademarkId = trademarkController.GetTrademarkIdByName(row.Cells["Бренд"].Value.ToString());
-
-                    Product updatedProduct = new Product
-                    {
-                        ID = (int)row.Cells["ID"].Value,
-                        Name = row.Cells["Наименование"].Value.ToString(),
-                        Amount = (int)row.Cells["Кол-во на складе"].Value,
-                        Unit = row.Cells["Ед.изм."].Value.ToString(),
-                        Cost = (decimal)row.Cells["Стоимость"].Value,
-                        Description = row.Cells["Описание"].Value.ToString(),
-                        CategoryID = categoryId,
-                        TrademarkID = trademarkId
-                    };
+                    DataGridViewRow currentRow = dataGridViewProducts.Rows[rowIndex];
+                    Product updatedProduct = GetProductInfo(ref currentRow);
 
                     productController.Edit(updatedProduct);
-                    row.Cells["Операция"].Value = "Удалить";
+                    currentRow.Cells["Операция"].Value = "Удалить";
                 }
 
                 productController.GetAllProducts(ref dataGridViewProducts);
             }
+        }
+
+        private Product GetProductInfo(ref DataGridViewRow currentRow)
+        {
+            ProductEntitiesIDsVM productViewModel = new ProductEntitiesIDsVM()
+            {
+                ProductID = productController.GetProductIdByName(currentRow.Cells["Наименование"].Value.ToString()),
+                CategoryID = categoryController.GetCategoryIdByName(currentRow.Cells["Категория"].Value.ToString()),
+                TrademarkID = trademarkController.GetTrademarkIdByName(currentRow.Cells["Бренд"].Value.ToString())
+            };
+
+            if (GetInfoHandleNotOK(productViewModel))
+                MessageBox.Show("Операция не удалась", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+                return null;
+
+            Product product = new Product
+            {
+                ID = (int)currentRow.Cells["ID"].Value,
+                Name = currentRow.Cells["Наименование"].Value.ToString(),
+                Amount = (int)currentRow.Cells["Кол-во на складе"].Value,
+                Unit = currentRow.Cells["Ед.изм."].Value.ToString(),
+                Cost = (decimal)currentRow.Cells["Стоимость"].Value,
+                Description = currentRow.Cells["Описание"].Value.ToString(),
+                CategoryID = productViewModel.CategoryID,
+                TrademarkID = productViewModel.TrademarkID
+            };
+
+            return product;
+        }
+
+        private bool GetInfoHandleNotOK(ProductEntitiesIDsVM productViewModel)
+        {
+            bool handleOK = true;
+            int productId = productViewModel.ProductID;
+            int categoryId = productViewModel.CategoryID;
+            int trademarkId = productViewModel.TrademarkID;
+
+            if (categoryId == 0)
+            {
+                MessageBox.Show("Поставщик не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                handleOK = false;
+            }
+            if (trademarkId == 0)
+            {
+                MessageBox.Show("Поставщик не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                handleOK = false;
+            }
+            if (productId != 0)
+            {
+                MessageBox.Show("Реализация уже существует", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                handleOK = false;
+            }
+
+            return handleOK;
         }
 
         private void dataGridViewProducts_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -130,7 +145,7 @@ namespace DataBaseOP
                     DataGridViewRow editingRow = dataGridViewProducts.Rows[rowIndex];
 
                     DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
-                    dataGridViewProducts[8, rowIndex] = linkCell;
+                    dataGridViewProducts[editingRow.Cells["Операция"].ColumnIndex, rowIndex] = linkCell;
                     editingRow.Cells["Операция"].Value = "Изм.";
                 }
             }
@@ -150,7 +165,7 @@ namespace DataBaseOP
                     int lastRow = dataGridViewProducts.Rows.Count - 2;
                     DataGridViewRow row = dataGridViewProducts.Rows[lastRow];
                     DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
-                    dataGridViewProducts[8, lastRow] = linkCell;
+                    dataGridViewProducts[row.Cells["Операция"].ColumnIndex, lastRow] = linkCell;
 
                     row.Cells["Операция"].Value = "Добавить";
                 }
@@ -182,6 +197,11 @@ namespace DataBaseOP
             {
                 e.Handled = true;
             }
+        }
+
+        private void экспортВExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExcelService.ExportToExcel(dataGridViewProducts, this.Text);
         }
     }
 }

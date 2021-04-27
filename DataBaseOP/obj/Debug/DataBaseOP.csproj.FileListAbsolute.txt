@@ -36,7 +36,6 @@ C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\Data
 C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\bin\Debug\DataBaseOP.exe.config
 C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\bin\Debug\DataBaseOP.exe
 C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\bin\Debug\DataBaseOP.pdb
-C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.csprojAssemblyReference.cache
 C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.AboutBox.resources
 C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.CategoryForm.resources
 C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.DataBase.resources
@@ -53,3 +52,6 @@ C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.exe
 C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.pdb
 C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Report.resources
 C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.ClientForm.resources
+C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.ClientForm.resources
+C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Report.resources
+C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.csprojAssemblyReference.cache
