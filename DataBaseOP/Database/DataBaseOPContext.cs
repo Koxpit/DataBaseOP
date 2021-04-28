@@ -3,12 +3,12 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using DataBaseOP.Database.Entities;
-using DataBaseOP.ViewModels;
 
 namespace DataBaseOP.Database
 {
     public class DataBaseOPContext
     {
+        // Реализовн паттерн Singleton. Экземпляр класса DataBaseOPContext можно создать только один.
         private static readonly DataBaseOPContext context = new DataBaseOPContext();
         public static DataBaseOPContext GetContext => context;
         private string ConnectionString { get; }
@@ -20,6 +20,10 @@ namespace DataBaseOP.Database
 
         // POSITION COMMANDS
 
+        /// <summary>
+        /// Добавляет новую должность в таблицу "Position".
+        /// </summary>
+        /// <param name="position">Новая сущность "Должности"</param>
         public void AddPosition(Position position)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -39,6 +43,10 @@ namespace DataBaseOP.Database
             }
         }
 
+        /// <summary>
+        /// Изменяет информацию о должности в таблице "Position".
+        /// </summary>
+        /// <param name="position">Сущность "Должность" с обновленными данными.</param>
         public void EditPosition(Position position)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -60,6 +68,10 @@ namespace DataBaseOP.Database
             }
         }
 
+        /// <summary>
+        /// Извлекает все данные из таблицы "Position".
+        /// </summary>
+        /// <returns>Таблица с названиями имеющихся должностей в БД.</returns>
         public DataTable GetAllPositions()
         {
             DataTable dataTable;
@@ -84,6 +96,10 @@ namespace DataBaseOP.Database
 
         // CATEGORY COMMANDS
 
+        /// <summary>
+        /// Добавляет новую категорию в таблицу "Category".
+        /// </summary>
+        /// <param name="category">Новая сущность "Категория".</param>
         public void AddCategory(Category category)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -103,6 +119,10 @@ namespace DataBaseOP.Database
             }
         }
 
+        /// <summary>
+        /// Изменяет информацию о категории в таблице "Category".
+        /// </summary>
+        /// <param name="category">Сущность "Категория" с обновленными данными.</param>
         public void EditCategory(Category category)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -124,13 +144,18 @@ namespace DataBaseOP.Database
             }
         }
 
-        public void Delete(int positionId, string procedureName)
+        /// <summary>
+        /// Универсальный метод для удаления записей из таблиц.
+        /// </summary>
+        /// <param name="recordId">Идентификатор записи, по которому будет искаться запись в БД для удаления.</param>
+        /// <param name="procedureName">Наименование хранимой процедуры для удаления записи.</param>
+        public void Delete(int recordId, string procedureName)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
 
-                int id = positionId;
+                int id = recordId;
 
                 SqlCommand command = new SqlCommand(procedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -142,6 +167,10 @@ namespace DataBaseOP.Database
             }
         }
 
+        /// <summary>
+        /// Извлекает все данные из таблицы "Category".
+        /// </summary>
+        /// <returns>Таблица с названиями имеющихся категорий товаров в БД.</returns>
         public DataTable GetAllCategories()
         {
             DataTable dataTable;
@@ -164,6 +193,11 @@ namespace DataBaseOP.Database
             return dataTable;
         }
 
+        /// <summary>
+        /// Возвращает идентификатор категории по наименованию категории. Название категории - уникальный столбец в таблице "Category".
+        /// </summary>
+        /// <param name="categoryName">Наименование категории.</param>
+        /// <returns>Идентификатор найденной категории.</returns>
         public int GetCategoryIdByName(string categoryName)
         {
             int categoryId = 0;
@@ -188,7 +222,11 @@ namespace DataBaseOP.Database
 
         // SUPPLIER COMMANDS
 
-        
+
+        /// <summary>
+        /// Добавляет нового поставщика в таблицу "Supplier".
+        /// </summary>
+        /// <param name="supplier">Новая сущность "Поставщик".</param>
         public void AddSupplier(Supplier supplier)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -211,7 +249,11 @@ namespace DataBaseOP.Database
                 connection.Close();
             }
         }
-        
+
+        /// <summary>
+        /// Изменяет информацию о поставщике в таблице "Supplier".
+        /// </summary>
+        /// <param name="supplier">Сущность "Поставщик" с обновленными данными.</param>
         public void EditSupplier(Supplier supplier)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -237,6 +279,10 @@ namespace DataBaseOP.Database
             }
         }
 
+        /// <summary>
+        /// Извлекает все данные из таблицы "Supplier".
+        /// </summary>
+        /// <returns>Таблица с информацией о существующих поставщиках в БД.</returns>
         public DataTable GetAllSuppliers()
         {
             DataTable dataTable;
@@ -260,6 +306,11 @@ namespace DataBaseOP.Database
             return dataTable;
         }
 
+        /// <summary>
+        /// Возвращает идентификатор поставщика по телефону поставщика. Телефон - уникальный столбец в таблице "Supplier".
+        /// </summary>
+        /// <param name="supplierPhone">Номер телефона поставщика.</param>
+        /// <returns>Идентификатор найденного поставщика.</returns>
         public int GetSupplierIdByPhone(string supplierPhone)
         {
             int supplierId = 0;
@@ -281,6 +332,11 @@ namespace DataBaseOP.Database
             return supplierId;
         }
 
+        /// <summary>
+        /// Возвращает информацию о поставщике, найденного по телефону поставщика.
+        /// </summary>
+        /// <param name="supplierPhone">Номер телефона поставщика.</param>
+        /// <returns>Таблица с данными о найденном поставщике.</returns>
         public DataTable GetSupplierInfoByPhone(string supplierPhone)
         {
             DataTable dataTable;
@@ -308,6 +364,10 @@ namespace DataBaseOP.Database
 
         // TRADEMARK COMMANDS
 
+        /// <summary>
+        /// Добавляет новый бренд в таблицу "Trademark".
+        /// </summary>
+        /// <param name="trademark">Новая сущность "Бренд".</param>
         public void AddTrademark(Trademark trademark)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -331,6 +391,10 @@ namespace DataBaseOP.Database
             }
         }
 
+        /// <summary>
+        /// Изменяет информацию о бренде в таблице "Trademark".
+        /// </summary>
+        /// <param name="trademark">Сущность "Бренд" с обновленными данными.</param>
         public void EditTrademark(Trademark trademark)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -356,6 +420,10 @@ namespace DataBaseOP.Database
             }
         }
 
+        /// <summary>
+        /// Извлекает все данные из таблицы "Trademark".
+        /// </summary>
+        /// <returns>Таблица с информацией о существующих брендах в БД.</returns>
         public DataTable GetAllTrademarks()
         {
             DataTable dataTable;
@@ -379,6 +447,11 @@ namespace DataBaseOP.Database
             return dataTable;
         }
 
+        /// <summary>
+        /// Возвращает идентификатор бренда, найденного по наименованию бренда. Имя бренда - уникальный столбец в таблице "Trademark".
+        /// </summary>
+        /// <param name="trademarkName">Наименование бренда.</param>
+        /// <returns>Идентификатор найденного бренда.</returns>
         public int GetTrademarkIdByName(string trademarkName)
         {
             int trademarkId = 0;
@@ -404,6 +477,10 @@ namespace DataBaseOP.Database
 
         // TRADEMARK COMMANDS
 
+        /// <summary>
+        /// Добавляет нового клиента в таблицу "Client".
+        /// </summary>
+        /// <param name="client">Новая сущность "Клиент".</param>
         public void AddClient(Client client)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -427,6 +504,10 @@ namespace DataBaseOP.Database
             }
         }
 
+        /// <summary>
+        /// Изменяет информацию о клиенте в таблице "Client".
+        /// </summary>
+        /// <param name="client">Сущность "Клиент" с обновленными данными.</param>
         public void EditClient(Client client)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -452,6 +533,10 @@ namespace DataBaseOP.Database
             }
         }
 
+        /// <summary>
+        /// Извлекает все данные из таблицы "Client".
+        /// </summary>
+        /// <returns>Таблица с информацией о существующих клиентах в БД.</returns>
         public DataTable GetAllClients()
         {
             DataTable dataTable;
@@ -475,6 +560,11 @@ namespace DataBaseOP.Database
             return dataTable;
         }
 
+        /// <summary>
+        /// Возвращает идентификатор клиента, найденного по номеру телефона клиента. Номер телефона - уникальный столбец в таблице "Client".
+        /// </summary>
+        /// <param name="clientPhone">Номер телефона клиента.</param>
+        /// <returns>Идентификатор найденного клиента.</returns>
         public int GetClientIdByPhone(string clientPhone)
         {
             int clientId = 0;
@@ -496,6 +586,11 @@ namespace DataBaseOP.Database
             return clientId;
         }
 
+        /// <summary>
+        /// Возвращает информацию о клиенте, найденного по номеру телефона клиента.
+        /// </summary>
+        /// <param name="clientPhone">Номер телефона клиента.</param>
+        /// <returns>Таблица с данными о найденном клиенте.</returns>
         public DataTable GetClientInfoByPhone(string clientPhone)
         {
             DataTable dataTable;
@@ -523,6 +618,10 @@ namespace DataBaseOP.Database
 
         // REALIZATION COMMANDS
 
+        /// <summary>
+        /// Добавляет новую реализацию в таблицу "Realization".
+        /// </summary>
+        /// <param name="realization">Новая сущность "Реализация".</param>
         public void AddRealization(Realization realization)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -542,6 +641,10 @@ namespace DataBaseOP.Database
             }
         }
 
+        /// <summary>
+        /// Изменяет информацию о реализации в таблице "Realization".
+        /// </summary>
+        /// <param name="realization">Сущность "Реализация" с обновленными данными.</param>
         public void EditRealization(Realization realization)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -563,6 +666,10 @@ namespace DataBaseOP.Database
             }
         }
 
+        /// <summary>
+        /// Извлекает все данные из таблицы "Realization".
+        /// </summary>
+        /// <returns>Таблица с информацией о существующих реализациях в БД.</returns>
         public DataTable GetAllRealizations()
         {
             DataTable dataTable;
@@ -586,6 +693,11 @@ namespace DataBaseOP.Database
             return dataTable;
         }
 
+        /// <summary>
+        /// Возвращает идентификатор реализации, найденной по номеру реализации. Номер реализации - уникальный столбец в таблице "Realization".
+        /// </summary>
+        /// <param name="realizationNumber">Номер реализации.</param>
+        /// <returns>Идентификатор найденной реализации.</returns>
         public int GetRealizationIdByNumber(string realizationNumber)
         {
             int realizationId = 0;
@@ -610,6 +722,10 @@ namespace DataBaseOP.Database
 
         // PRODUCT COMMANDS
 
+        /// <summary>
+        /// Добавляет новый продукт в таблицу "Product".
+        /// </summary>
+        /// <param name="product">Новая сущность "Продукт".</param>
         public void AddProduct(Product product)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -641,6 +757,10 @@ namespace DataBaseOP.Database
             }
         }
 
+        /// <summary>
+        /// Изменяет информацию о продукте в таблице "Product".
+        /// </summary>
+        /// <param name="product">Сущность "Продукт" с обновленными данными.</param>
         public void EditProduct(Product product)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -674,6 +794,10 @@ namespace DataBaseOP.Database
             }
         }
 
+        /// <summary>
+        /// Извлекает все данные из таблицы "Product".
+        /// </summary>
+        /// <returns>Таблица с информацией о существующих продукциях в БД.</returns>
         public DataTable GetAllProducts()
         {
             DataTable dataTable;
@@ -697,6 +821,11 @@ namespace DataBaseOP.Database
             return dataTable;
         }
 
+        /// <summary>
+        /// Возвращает идентификатор продукта, найденного по наименованию продукции. Наименование продукции - уникальный столбец в таблице "Product".
+        /// </summary>
+        /// <param name="productName">Наименование продукта.</param>
+        /// <returns>Идентификатор найденного продукта.</returns>
         public int GetProductIdByName(string productName)
         {
             int productId = 0;
@@ -721,6 +850,10 @@ namespace DataBaseOP.Database
 
         // WORKER COMMANDS
 
+        /// <summary>
+        /// Добавляет нового сотрудника в таблицу "Worker".
+        /// </summary>
+        /// <param name="worker">Новая сущность "Сотрудник".</param>
         public void AddWorker(Worker worker)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -745,8 +878,10 @@ namespace DataBaseOP.Database
             }
         }
 
-
-        
+        /// <summary>
+        /// Изменяет информацию о сотруднике в таблице "Worker".
+        /// </summary>
+        /// <param name="worker">Сущность "Сотрудник" с обновленными данными.</param>
         public void EditWorker(Worker worker)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -767,7 +902,11 @@ namespace DataBaseOP.Database
                 connection.Close();
             }
         }
-        
+
+        /// <summary>
+        /// Извлекает все данные из таблицы "Workers".
+        /// </summary>
+        /// <returns>Таблица с информацией о существующих сотрудниках в БД.</returns>
         public DataTable GetAllWorkers()
         {
             DataTable dataTable;
@@ -790,6 +929,11 @@ namespace DataBaseOP.Database
             return dataTable;
         }
 
+        /// <summary>
+        /// Возвращает идентификатор сотрудника, найденного по номеру телефона сотрудника. Номер телефона - уникальный столбец в таблице "Worker".
+        /// </summary>
+        /// <param name="workerPhone">Номер телефона сотрудника.</param>
+        /// <returns>Идентификатор найденного сотрудника.</returns>
         public int GetWorkerIdByPhone(string workerPhone)
         {
             int workerId = 0;
@@ -811,6 +955,11 @@ namespace DataBaseOP.Database
             return workerId;
         }
 
+        /// <summary>
+        /// Возвращает информацию о сотруднике, найденного по номеру телефона сотрудника.
+        /// </summary>
+        /// <param name="workerPhone">Номер телефона сотрудника.</param>
+        /// <returns>Таблица с данными о найденном сотруднике.</returns>
         public DataTable GetWorkerInfoByPhone(string workerPhone)
         {
             DataTable dataTable;
@@ -838,6 +987,12 @@ namespace DataBaseOP.Database
 
         // REPORTS
 
+        /// <summary>
+        /// Возвращает информацию о выручке и обороте средств за выбранный период времени.
+        /// </summary>
+        /// <param name="beginDate">Дата начала периода.</param>
+        /// <param name="endDate">Дата конца периода.</param>
+        /// <returns>Таблица с информацией о выручке о обороте средств.</returns>
         public DataTable GetRealizationsResult(DateTime beginDate, DateTime endDate)
         {
             DataTable dataTable;
