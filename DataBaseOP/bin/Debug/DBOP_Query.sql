@@ -467,11 +467,20 @@ GO
 
 GO
 CREATE PROCEDURE sp_GetClientIdByPhone
-@FIO NVARCHAR(100)
+@Phone NVARCHAR(11)
 AS
 SELECT ID
 FROM Client
-WHERE FIO = @FIO
+WHERE Phone = @Phone
+GO
+
+GO
+CREATE PROCEDURE sp_GetClientInfoByPhone
+@Phone NVARCHAR(11)
+AS
+SELECT FIO, Address
+FROM Client
+WHERE Phone = @Phone
 GO
 
 GO
@@ -511,11 +520,30 @@ WHERE Phone = @Phone
 GO
 
 GO
+CREATE PROCEDURE sp_GetSupplierInfoByPhone
+@Phone NVARCHAR(11)
+AS
+SELECT FIO, Address
+FROM Supplier
+WHERE Phone = @Phone
+GO
+
+GO
 CREATE PROCEDURE sp_GetWorkerIdByPhone
 @Phone NVARCHAR(11)
 AS
 SELECT ID
 FROM Worker
+WHERE Phone = @Phone
+GO
+
+GO
+CREATE PROCEDURE sp_GetWorkerInfoByPhone
+@Phone NVARCHAR(11)
+AS
+SELECT FIO, Position.Name
+FROM Worker
+JOIN Position ON Worker.PositionID = Position.ID
 WHERE Phone = @Phone
 GO
 

@@ -1,6 +1,7 @@
 ﻿using DataBaseOP.Database.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,20 @@ namespace DataBaseOP.Controllers
         public int GetSupplierIdByPhone(string supplierPhone)
         {
             return Context.GetSupplierIdByPhone(supplierPhone);
+        }
+
+        public Supplier GetSupplierInfoByPhone(string supplierPhone)
+        {
+            DataTable clientInfo = Context.GetSupplierInfoByPhone(supplierPhone);
+
+            Supplier supplier = new Supplier()
+            {
+                FIO = clientInfo.Rows[0][0].ToString(),
+                Phone = supplierPhone,
+                Address = clientInfo.Rows[0][1].ToString()
+            };
+
+            return supplier;
         }
     }
 }

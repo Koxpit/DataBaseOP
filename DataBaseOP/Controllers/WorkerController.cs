@@ -1,5 +1,6 @@
 ﻿using DataBaseOP.Database.Entities;
 using System;
+using System.Data;
 using System.Windows.Forms;
 
 namespace DataBaseOP.Controllers
@@ -29,6 +30,20 @@ namespace DataBaseOP.Controllers
         public int GetWorkerIdByPhone(string workerPhone)
         {
             return Context.GetWorkerIdByPhone(workerPhone);
+        }
+
+        public Worker GetWorkerInfoByPhone(string workerPhone)
+        {
+            DataTable clientInfo = Context.GetWorkerInfoByPhone(workerPhone);
+
+            Worker worker = new Worker()
+            {
+                FIO = clientInfo.Rows[0][0].ToString(),
+                Position = new Position { Name = clientInfo.Rows[0][1].ToString() },
+                Phone = workerPhone
+            };
+
+            return worker;
         }
     }
 }

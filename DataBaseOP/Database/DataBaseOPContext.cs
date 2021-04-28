@@ -281,6 +281,29 @@ namespace DataBaseOP.Database
             return supplierId;
         }
 
+        public DataTable GetSupplierInfoByPhone(string supplierPhone)
+        {
+            DataTable dataTable;
+            string phone = supplierPhone;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_GetSupplierInfoByPhone", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("Phone", phone);
+                SqlDataReader reader = command.ExecuteReader();
+                dataTable = new DataTable();
+
+                dataTable.Load(reader);
+
+                connection.Close();
+            }
+
+            return dataTable;
+        }
+
 
 
         // TRADEMARK COMMANDS
@@ -471,6 +494,29 @@ namespace DataBaseOP.Database
             }
 
             return clientId;
+        }
+
+        public DataTable GetClientInfoByPhone(string clientPhone)
+        {
+            DataTable dataTable;
+            string phone = clientPhone;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_GetClientInfoByPhone", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("Phone", phone);
+                SqlDataReader reader = command.ExecuteReader();
+                dataTable = new DataTable();
+
+                dataTable.Load(reader);
+
+                connection.Close();
+            }
+
+            return dataTable;
         }
 
 
@@ -763,6 +809,29 @@ namespace DataBaseOP.Database
             }
 
             return workerId;
+        }
+
+        public DataTable GetWorkerInfoByPhone(string workerPhone)
+        {
+            DataTable dataTable;
+            string phone = workerPhone;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_GetWorkerInfoByPhone", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("Phone", phone);
+                SqlDataReader reader = command.ExecuteReader();
+                dataTable = new DataTable();
+
+                dataTable.Load(reader);
+
+                connection.Close();
+            }
+
+            return dataTable;
         }
 
 

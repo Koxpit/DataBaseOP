@@ -3,6 +3,7 @@ using DataBaseOP.Database.Entities;
 using DataBaseOP.Services;
 using DataBaseOP.ViewModels;
 using System;
+using System.Data;
 using System.Windows.Forms;
 
 namespace DataBaseOP
@@ -44,6 +45,8 @@ namespace DataBaseOP
         {
             try
             {
+                CellContentClickTip(ref e);
+
                 int taskIndex = dataGridViewRealizations.Rows[e.RowIndex].Cells["Операция"].ColumnIndex;
 
                 if (e.ColumnIndex == taskIndex)
@@ -89,6 +92,32 @@ namespace DataBaseOP
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CellContentClickTip(ref DataGridViewCellEventArgs e)
+        {
+            DataGridViewCell clientPhoneCell = dataGridViewRealizations.Rows[e.RowIndex].Cells["Телефон заказчика"];
+            DataGridViewCell supplierPhoneCell = dataGridViewRealizations.Rows[e.RowIndex].Cells["Телефон поставщика"];
+            DataGridViewCell workerPhoneCell = dataGridViewRealizations.Rows[e.RowIndex].Cells["Телефон работника"];
+            DataGridViewRow currentRow = dataGridViewRealizations.Rows[e.RowIndex];
+
+            if (e.ColumnIndex == clientPhoneCell.ColumnIndex)
+            {
+                Client client = clientController.GetClientInfoByPhone(currentRow.Cells["Телефон заказчика"].Value.ToString());
+                clientPhoneCell.ToolTipText = "ФИО: " + client.FIO + "\n" + "Адрес: " + client.Address + "\n" + "Телефон: " + client.Phone;
+            }
+
+            if (e.ColumnIndex == supplierPhoneCell.ColumnIndex)
+            {
+                Supplier supplier = supplierController.GetSupplierInfoByPhone(currentRow.Cells["Телефон поставщика"].Value.ToString());
+                supplierPhoneCell.ToolTipText = "ФИО: " + supplier.FIO + "\n" + "Адрес: " + supplier.Address + "\n" + "Телефон: " + supplier.Phone;
+            }
+
+            if (e.ColumnIndex == workerPhoneCell.ColumnIndex)
+            {
+                Worker worker = workerController.GetWorkerInfoByPhone(currentRow.Cells["Телефон работника"].Value.ToString());
+                workerPhoneCell.ToolTipText = "ФИО: " + worker.FIO + "\n" + "Должность: " + worker.Position.Name;
             }
         }
 
@@ -267,6 +296,11 @@ namespace DataBaseOP
         private void экспортВExcelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ExcelService.ExportToExcel(dataGridViewRealizations, this.Text);
+        }
+
+        private void toolTip_Popup(object sender, PopupEventArgs e)
+        {
+
         }
     }
 }

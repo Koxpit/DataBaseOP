@@ -36,13 +36,13 @@
             this.Realization = new System.Windows.Forms.Button();
             this.Supplier = new System.Windows.Forms.Button();
             this.Category = new System.Windows.Forms.Button();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.OneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TwoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.Client = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.menuStrip1.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // Worker
@@ -150,22 +150,22 @@
             this.Category.UseVisualStyleBackColor = false;
             this.Category.Click += new System.EventHandler(this.Category_Click);
             // 
-            // menuStrip1
+            // menuStrip
             // 
-            this.menuStrip1.BackColor = System.Drawing.Color.Maroon;
-            this.menuStrip1.BackgroundImage = global::DataBaseOP.Properties.Resources.tekstura_tasc;
-            this.menuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.menuStrip1.Font = new System.Drawing.Font("Times New Roman", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStrip.BackColor = System.Drawing.Color.Maroon;
+            this.menuStrip.BackgroundImage = global::DataBaseOP.Properties.Resources.tekstura_tasc;
+            this.menuStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.menuStrip.Font = new System.Drawing.Font("Times New Roman", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.OneToolStripMenuItem,
             this.TwoToolStripMenuItem,
             this.ExitToolStripMenuItem2});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.menuStrip1.Size = new System.Drawing.Size(931, 39);
-            this.menuStrip1.TabIndex = 7;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.menuStrip.Size = new System.Drawing.Size(931, 39);
+            this.menuStrip.TabIndex = 7;
+            this.menuStrip.Text = "menuStrip1";
             // 
             // OneToolStripMenuItem
             // 
@@ -240,19 +240,19 @@
             this.Controls.Add(this.Trademark);
             this.Controls.Add(this.Position);
             this.Controls.Add(this.Worker);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "DataBase";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "База данных ОТ";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -267,7 +267,7 @@
         private System.Windows.Forms.Button Realization;
         private System.Windows.Forms.Button Supplier;
         private System.Windows.Forms.Button Category;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem OneToolStripMenuItem;
         private System.Windows.Forms.Button Client;
         private System.Windows.Forms.Label label1;
