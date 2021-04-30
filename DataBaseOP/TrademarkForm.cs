@@ -188,12 +188,15 @@ namespace DataBaseOP
         {
             try
             {
-                TextBox textBox = e.Control as TextBox;
+                e.Control.KeyPress -= new KeyPressEventHandler(InputHandlerService.DigitOnly);
                 int columnIndex = dataGridViewTrademarks.CurrentCell.ColumnIndex;
 
                 if (columnIndex == 3)
+                {
+                    TextBox textBox = e.Control as TextBox;
                     if (textBox != null)
                         textBox.KeyPress += new KeyPressEventHandler(InputHandlerService.DigitOnly);
+                }
             }
             catch (Exception ex)
             {

@@ -103,8 +103,6 @@ namespace DataBaseOP
             };
 
             if (GetInfoHandleNotOK(productViewModel))
-                MessageBox.Show("Операция не удалась", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else
                 return null;
 
             Product product = new Product
@@ -141,31 +139,24 @@ namespace DataBaseOP
 
         private bool GetInfoHandleNotOK(ProductEntitiesIDsVM productViewModel)
         {
-            bool handleOK = true;
-            int productId = productViewModel.ProductID;
+            bool handleNotOK = false;
             int categoryId = productViewModel.CategoryID;
             int trademarkId = productViewModel.TrademarkID;
 
             if (categoryId == 0)
             {
-                MessageBox.Show("Поставщик не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                handleOK = false;
-                return handleOK;
+                MessageBox.Show("Категория не найдена", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                handleNotOK = true;
+                return handleNotOK;
             }
             if (trademarkId == 0)
             {
-                MessageBox.Show("Поставщик не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                handleOK = false;
-                return handleOK;
-            }
-            if (productId != 0)
-            {
-                MessageBox.Show("Реализация уже существует", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                handleOK = false;
-                return handleOK;
+                MessageBox.Show("Бренд не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                handleNotOK = true;
+                return handleNotOK;
             }
 
-            return handleOK;
+            return handleNotOK;
         }
 
         private void dataGridViewProducts_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -215,12 +206,24 @@ namespace DataBaseOP
 
         private void dataGridViewProducts_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            TextBox textBox = e.Control as TextBox;
-            int columnIndex = dataGridViewProducts.CurrentCell.ColumnIndex;
+            try
+            {
+                e.Control.KeyPress -= new KeyPressEventHandler(InputHandlerService.DigitOnly);
+                int columnIndex = dataGridViewProducts.CurrentCell.ColumnIndex;
 
-            if (columnIndex == 2 || columnIndex == 4)
-                if (textBox != null)
-                    textBox.KeyPress += new KeyPressEventHandler(InputHandlerService.DigitOnly);
+                if (columnIndex == 2 || columnIndex == 4)
+                {
+                    TextBox tb = e.Control as TextBox;
+                    if (tb != null)
+                    {
+                        tb.KeyPress += new KeyPressEventHandler(InputHandlerService.DigitOnly);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void экспортВExcelToolStripMenuItem_Click(object sender, EventArgs e)

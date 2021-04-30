@@ -180,16 +180,23 @@ namespace DataBaseOP
         {
             try
             {
-                TextBox textBox = e.Control as TextBox;
+                e.Control.KeyPress -= new KeyPressEventHandler(InputHandlerService.DigitOnly);
+                e.Control.KeyPress -= new KeyPressEventHandler(InputHandlerService.SymbolWithSpace);
                 int columnIndex = dataGridViewClients.CurrentCell.ColumnIndex;
 
                 if (columnIndex == 2)
+                {
+                    TextBox textBox = e.Control as TextBox;
                     if (textBox != null)
                         textBox.KeyPress += new KeyPressEventHandler(InputHandlerService.DigitOnly);
+                }
 
                 if (columnIndex == 1)
+                {
+                    TextBox textBox = e.Control as TextBox;
                     if (textBox != null)
                         textBox.KeyPress += new KeyPressEventHandler(InputHandlerService.SymbolWithSpace);
+                }
             }
             catch (Exception ex)
             {

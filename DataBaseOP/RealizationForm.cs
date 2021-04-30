@@ -65,39 +65,39 @@ namespace DataBaseOP
                     {
                         int rowIndex = dataGridViewRealizations.Rows.Count - 2;
                         DataGridViewRow currentRow = dataGridViewRealizations.Rows[rowIndex];
+
                         Realization newRealization = GetRealizationInfo(ref currentRow);
+                        if (newRealization == null)
+                            return;
 
-                        if (newRealization != null)
+                        int currentRealizationId = realizationController.GetRealizationIdByNumber(newRealization.Number);
+                        if (currentRealizationId != 0)
                         {
-                            int currentRealizationId = realizationController.GetRealizationIdByNumber(newRealization.Number);
-                            if (currentRealizationId != 0)
-                            {
-                                MessageBox.Show("Реализация с введенным номером договора уже существует.");
-                                return;
-                            }
-
-                            realizationController.Add(newRealization);
-                            dataGridViewRealizations.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
+                            MessageBox.Show("Реализация с введенным номером договора уже существует.");
+                            return;
                         }
+
+                        realizationController.Add(newRealization);
+                        dataGridViewRealizations.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
                     }
                     else if (task == "Изм.")
                     {
                         int rowIndex = e.RowIndex;
                         DataGridViewRow currentRow = dataGridViewRealizations.Rows[rowIndex];
+
                         Realization updatedRealiaztion = GetRealizationInfo(ref currentRow);
+                        if (updatedRealiaztion == null)
+                            return;
 
-                        if (updatedRealiaztion != null)
+                        int currentRealizationId = realizationController.GetRealizationIdByNumber(updatedRealiaztion.Number);
+                        if (updatedRealiaztion.ID != currentRealizationId && currentRealizationId != 0)
                         {
-                            int currentRealizationId = realizationController.GetRealizationIdByNumber(updatedRealiaztion.Number);
-                            if (updatedRealiaztion.ID != currentRealizationId && currentRealizationId != 0)
-                            {
-                                MessageBox.Show("Реализация с введенным номером договора уже существует.");
-                                return;
-                            }
-
-                            realizationController.Edit(updatedRealiaztion);
-                            currentRow.Cells["Операция"].Value = "Удалить";
+                            MessageBox.Show("Реализация с введенным номером договора уже существует.");
+                            return;
                         }
+
+                        realizationController.Edit(updatedRealiaztion);
+                        currentRow.Cells["Операция"].Value = "Удалить";
                     }
 
                     realizationController.GetAllRealizations(ref dataGridViewRealizations);
@@ -147,8 +147,6 @@ namespace DataBaseOP
             };
 
             if (GetInfoHandleNotOK(realizationViewModel))
-                MessageBox.Show("Операция не удалась", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else 
                 return null;
 
             string currentNumberRealization = currentRow.Cells["Номер договора"].Value.ToString();
@@ -192,45 +190,38 @@ namespace DataBaseOP
 
         private bool GetInfoHandleNotOK(RealizationEntitiesIDsVM realizationViewModel)
         {
-            bool handleOK = true;
+            bool handleNotOK = false;
             int clientId = realizationViewModel.ClientID;
             int supplierId = realizationViewModel.SupplierID;
-            int realizationId = realizationViewModel.RealizationID;
             int seniorId = realizationViewModel.SeniorID;
             int productId = realizationViewModel.ProductID;
 
             if (clientId == 0)
             {
-                MessageBox.Show("Поставщик не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                handleOK = false;
-                return handleOK;
+                MessageBox.Show("Заказчик не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                handleNotOK = true;
+                return handleNotOK;
             }
             if (supplierId == 0)
             {
                 MessageBox.Show("Поставщик не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                handleOK = false;
-                return handleOK;
-            }
-            if (realizationId != 0)
-            {
-                MessageBox.Show("Реализация уже существует", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                handleOK = false;
-                return handleOK;
+                handleNotOK = true;
+                return handleNotOK;
             }
             if (seniorId == 0)
             {
                 MessageBox.Show("Рабочий не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                handleOK = false;
-                return handleOK;
+                handleNotOK = true;
+                return handleNotOK;
             }
             if (productId == 0)
             {
                 MessageBox.Show("Продукт не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                handleOK = false;
-                return handleOK;
+                handleNotOK = true;
+                return handleNotOK;
             }
 
-            return handleOK;
+            return handleNotOK;
         }
 
         private bool CellsIsNull(Realization realization)
@@ -316,19 +307,26 @@ namespace DataBaseOP
         {
             try
             {
-                TextBox textBox = e.Control as TextBox;
+                e.Control.KeyPress -= new KeyPressEventHandler(InputHandlerService.DigitOnly);
+                e.Control.KeyPress -= new KeyPressEventHandler(InputHandlerService.DateTimeOnly);
                 int columnIndex = dataGridViewRealizations.CurrentCell.ColumnIndex;
 
                 if (columnIndex == 1 || columnIndex == 3 || columnIndex == 4
                     || columnIndex == 5 || columnIndex == 6 || columnIndex == 7
                     || columnIndex == 8 || columnIndex == 9 || columnIndex == 10
                     || columnIndex == 11)
+                {
+                    TextBox textBox = e.Control as TextBox;
                     if (textBox != null)
                         textBox.KeyPress += new KeyPressEventHandler(InputHandlerService.DigitOnly);
+                }
 
                 if (columnIndex == 2)
+                {
+                    TextBox textBox = e.Control as TextBox;
                     if (textBox != null)
                         textBox.KeyPress += new KeyPressEventHandler(InputHandlerService.DateTimeOnly);
+                }
             }
             catch (Exception ex)
             {

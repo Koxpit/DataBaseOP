@@ -214,16 +214,23 @@ namespace DataBaseOP
         {
             try
             {
-                TextBox textBox = e.Control as TextBox;
+                e.Control.KeyPress -= new KeyPressEventHandler(InputHandlerService.DigitOnly);
+                e.Control.KeyPress -= new KeyPressEventHandler(InputHandlerService.SymbolWithSpace);
                 int columnIndex = dataGridViewSuppliers.CurrentCell.ColumnIndex;
 
                 if (columnIndex == 1)
+                {
+                    TextBox textBox = e.Control as TextBox;
                     if (textBox != null)
                         textBox.KeyPress += new KeyPressEventHandler(InputHandlerService.SymbolWithSpace);
+                }
 
                 if (columnIndex == 3)
+                {
+                    TextBox textBox = e.Control as TextBox;
                     if (textBox != null)
                         textBox.KeyPress += new KeyPressEventHandler(InputHandlerService.DigitOnly);
+                }
             }
             catch (Exception ex)
             {
