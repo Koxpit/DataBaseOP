@@ -48,6 +48,7 @@ namespace DataBaseOP
             this.dataGridViewTrademarks.TabIndex = 0;
             this.dataGridViewTrademarks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTrademarks_CellContentClick);
             this.dataGridViewTrademarks.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTrademarks_CellValueChanged);
+            this.dataGridViewTrademarks.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewTrademarks_DataError);
             this.dataGridViewTrademarks.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewTrademarks_EditingControlShowing);
             this.dataGridViewTrademarks.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewTrademarks_UserAddedRow);
             // 

@@ -55,3 +55,23 @@ C:\Users\denko\OneDrive\Рабочий стол\Курсовая\DataBaseOP\Data
 C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.ClientForm.resources
 C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Report.resources
 C:\Users\lenovo\Desktop\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.csprojAssemblyReference.cache
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\bin\Debug\DataBaseOP.exe.config
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\bin\Debug\DataBaseOP.exe
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\bin\Debug\DataBaseOP.pdb
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.csprojAssemblyReference.cache
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.AboutBox.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.CategoryForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.ClientForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.DataBase.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.PositionForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.ProductForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Properties.Resources.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.RealizationForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.Report.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.SupplierForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.TrademarkForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.WorkerForm.resources
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.csproj.GenerateResource.cache
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.csproj.CoreCompileInputs.cache
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.exe
+C:\Users\denko\OneDrive\Рабочий стол\Курсовая финал\DataBaseOP\DataBaseOP\obj\Debug\DataBaseOP.pdb

@@ -19,7 +19,14 @@ namespace DataBaseOP
 
         private void экспортВExelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ExcelService.ExportToExcel(dataGridViewClients, this.Text);
+            try
+            {
+                ExcelService.ExportToExcel(dataGridViewClients, this.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void dataGridViewClients_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -42,7 +49,23 @@ namespace DataBaseOP
                 {
                     int rowIndex = dataGridViewClients.Rows.Count - 2;
                     DataGridViewRow currentRow = dataGridViewClients.Rows[rowIndex];
+
                     Client newClient = GetClientInfo(ref currentRow);
+                    if (newClient == null)
+                        return;
+
+                    if (newClient.Phone.Length > 11)
+                    {
+                        MessageBox.Show("Номер телефона должен состоять не более чем из 11 цифр.");
+                        return;
+                    }
+
+                    int currentClientId = clientController.GetClientIdByPhone(newClient.Phone);
+                    if (currentClientId != 0)
+                    {
+                        MessageBox.Show("Введенный номер телефона уже принадлежит другому заказчику.");
+                        return;
+                    }
 
                     clientController.Add(newClient);
 
@@ -52,7 +75,17 @@ namespace DataBaseOP
                 {
                     int rowIndex = e.RowIndex;
                     DataGridViewRow currentRow = dataGridViewClients.Rows[rowIndex];
+
                     Client updatedClient = GetClientInfo(ref currentRow);
+                    if (updatedClient == null)
+                        return;
+
+                    int currentClientId = clientController.GetClientIdByPhone(updatedClient.Phone);
+                    if (updatedClient.ID != currentClientId && currentClientId != 0)
+                    {
+                        MessageBox.Show("Введенный номер телефона уже принадлежит другому заказчику.");
+                        return;
+                    }
 
                     clientController.Edit(updatedClient);
 
@@ -73,7 +106,23 @@ namespace DataBaseOP
                 Address = currentRow.Cells["Адрес"].Value.ToString()
             };
 
+            if (CellsIsNull(client))
+            {
+                MessageBox.Show("Заполните все поля!");
+                return null;
+            }
+
             return client;
+        }
+
+        private bool CellsIsNull(Client client)
+        {
+            bool isNull = false;
+
+            if (client.FIO == "" || client.Address == "" || client.Phone == "")
+                isNull = true;
+
+            return isNull;
         }
 
         private void dataGridViewClients_UserAddedRow(object sender, DataGridViewRowEventArgs e)
@@ -106,6 +155,16 @@ namespace DataBaseOP
                     int rowIndex = dataGridViewClients.SelectedCells[0].RowIndex;
                     DataGridViewRow editingRow = dataGridViewClients.Rows[rowIndex];
 
+                    Client client = GetClientInfo(ref editingRow);
+                    if (client == null)
+                        return;
+
+                    if (client.Phone.Length > 11)
+                    {
+                        MessageBox.Show("Номер телефона должен состоять не более чем из 11 цифр.");
+                        return;
+                    }
+
                     DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
                     dataGridViewClients[editingRow.Cells["Операция"].ColumnIndex, rowIndex] = linkCell;
                     editingRow.Cells["Операция"].Value = "Изм.";
@@ -119,24 +178,22 @@ namespace DataBaseOP
 
         private void dataGridViewClients_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            e.Control.KeyPress -= new KeyPressEventHandler(Column_KeyPress);
-
-            if (dataGridViewClients.CurrentCell.ColumnIndex == 1)
+            try
             {
                 TextBox textBox = e.Control as TextBox;
+                int columnIndex = dataGridViewClients.CurrentCell.ColumnIndex;
 
-                if (textBox != null)
-                {
-                    textBox.KeyPress += new KeyPressEventHandler(Column_KeyPress);
-                }
+                if (columnIndex == 2)
+                    if (textBox != null)
+                        textBox.KeyPress += new KeyPressEventHandler(InputHandlerService.DigitOnly);
+
+                if (columnIndex == 1)
+                    if (textBox != null)
+                        textBox.KeyPress += new KeyPressEventHandler(InputHandlerService.SymbolWithSpace);
             }
-        }
-
-        private void Column_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (char.IsSymbol(e.KeyChar) && char.IsDigit(e.KeyChar))
+            catch (Exception ex)
             {
-                e.Handled = true;
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -145,6 +202,29 @@ namespace DataBaseOP
             try
             {
                 clientController.GetAllClients(ref dataGridViewClients);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dataGridViewClients_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            try
+            {
+                newRowAdding = false;
+
+                foreach (DataGridViewRow s in dataGridViewClients.Rows)
+                {
+                    if (s.Index <= dataGridViewClients.Rows.Count - 2)
+                    {
+                        if (s.Cells["ФИО"].Value.ToString() == ""
+                            || s.Cells["Адрес"].Value.ToString() == ""
+                            || s.Cells["Телефон"].Value.ToString() == "")
+                            return;
+                    }
+                }
             }
             catch (Exception ex)
             {

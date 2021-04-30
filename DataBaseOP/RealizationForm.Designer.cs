@@ -29,12 +29,10 @@ namespace DataBaseOP
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RealizationForm));
             this.dataGridViewRealizations = new System.Windows.Forms.DataGridView();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.экспортВExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRealizations)).BeginInit();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -50,6 +48,7 @@ namespace DataBaseOP
             this.dataGridViewRealizations.TabIndex = 0;
             this.dataGridViewRealizations.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRealizations_CellContentClick);
             this.dataGridViewRealizations.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRealizations_CellValueChanged);
+            this.dataGridViewRealizations.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewRealizations_DataError);
             this.dataGridViewRealizations.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewRealizations_EditingControlShowing);
             this.dataGridViewRealizations.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewRealizations_UserAddedRow);
             // 
@@ -71,10 +70,6 @@ namespace DataBaseOP
             this.экспортВExcelToolStripMenuItem.Size = new System.Drawing.Size(133, 23);
             this.экспортВExcelToolStripMenuItem.Text = "Экспорт в excel";
             this.экспортВExcelToolStripMenuItem.Click += new System.EventHandler(this.экспортВExcelToolStripMenuItem_Click);
-            // 
-            // toolTip
-            // 
-            this.toolTip.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip_Popup);
             // 
             // RealizationForm
             // 
@@ -101,6 +96,5 @@ namespace DataBaseOP
         private System.Windows.Forms.DataGridView dataGridViewRealizations;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem экспортВExcelToolStripMenuItem;
-        private System.Windows.Forms.ToolTip toolTip;
     }
 }

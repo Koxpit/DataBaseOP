@@ -3,13 +3,6 @@ using DataBaseOP.Database.Entities;
 using DataBaseOP.Services;
 using DataBaseOP.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DataBaseOP
@@ -61,7 +54,17 @@ namespace DataBaseOP
                 {
                     int rowIndex = dataGridViewProducts.Rows.Count - 2;
                     DataGridViewRow currentRow = dataGridViewProducts.Rows[rowIndex];
+
                     Product newProduct = GetProductInfo(ref currentRow);
+                    if (newProduct == null)
+                        return;
+
+                    int currentProductId = productController.GetProductIdByName(newProduct.Name);
+                    if (currentProductId != 0)
+                    {
+                        MessageBox.Show("Продукт с введенным названием уже существует.");
+                        return;
+                    }
 
                     productController.Add(newProduct);
                     dataGridViewProducts.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
@@ -70,7 +73,17 @@ namespace DataBaseOP
                 {
                     int rowIndex = e.RowIndex;
                     DataGridViewRow currentRow = dataGridViewProducts.Rows[rowIndex];
+
                     Product updatedProduct = GetProductInfo(ref currentRow);
+                    if (updatedProduct == null)
+                        return;
+
+                    int currentProductId = productController.GetProductIdByName(updatedProduct.Name);
+                    if (updatedProduct.ID != currentProductId && currentProductId != 0)
+                    {
+                        MessageBox.Show("Продукт с введенным названием уже существует.");
+                        return;
+                    }
 
                     productController.Edit(updatedProduct);
                     currentRow.Cells["Операция"].Value = "Удалить";
@@ -106,7 +119,24 @@ namespace DataBaseOP
                 TrademarkID = productViewModel.TrademarkID
             };
 
+            if (CellsIsNull(product))
+            {
+                MessageBox.Show("Заполните все поля!");
+                return null;
+            }
+
             return product;
+        }
+
+        private bool CellsIsNull(Product product)
+        {
+            bool isNull = false;
+
+            if (product.Name == "" || product.Amount == 0 || product.Unit == ""
+                || product.Cost == 0 || product.Description == "")
+                isNull = true;
+
+            return isNull;
         }
 
         private bool GetInfoHandleNotOK(ProductEntitiesIDsVM productViewModel)
@@ -120,16 +150,19 @@ namespace DataBaseOP
             {
                 MessageBox.Show("Поставщик не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 handleOK = false;
+                return handleOK;
             }
             if (trademarkId == 0)
             {
                 MessageBox.Show("Поставщик не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 handleOK = false;
+                return handleOK;
             }
             if (productId != 0)
             {
                 MessageBox.Show("Реализация уже существует", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 handleOK = false;
+                return handleOK;
             }
 
             return handleOK;
@@ -143,6 +176,10 @@ namespace DataBaseOP
                 {
                     int rowIndex = dataGridViewProducts.SelectedCells[0].RowIndex;
                     DataGridViewRow editingRow = dataGridViewProducts.Rows[rowIndex];
+
+                    Product product = GetProductInfo(ref editingRow);
+                    if (product == null)
+                        return;
 
                     DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
                     dataGridViewProducts[editingRow.Cells["Операция"].ColumnIndex, rowIndex] = linkCell;
@@ -178,30 +215,49 @@ namespace DataBaseOP
 
         private void dataGridViewProducts_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            e.Control.KeyPress -= new KeyPressEventHandler(Column_KeyPress);
+            TextBox textBox = e.Control as TextBox;
+            int columnIndex = dataGridViewProducts.CurrentCell.ColumnIndex;
 
-            if (dataGridViewProducts.CurrentCell.ColumnIndex == 1)
-            {
-                TextBox textBox = e.Control as TextBox;
-
+            if (columnIndex == 2 || columnIndex == 4)
                 if (textBox != null)
-                {
-                    textBox.KeyPress += new KeyPressEventHandler(Column_KeyPress);
-                }
-            }
-        }
-
-        private void Column_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (char.IsSymbol(e.KeyChar) && char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+                    textBox.KeyPress += new KeyPressEventHandler(InputHandlerService.DigitOnly);
         }
 
         private void экспортВExcelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ExcelService.ExportToExcel(dataGridViewProducts, this.Text);
+            try
+            {
+                ExcelService.ExportToExcel(dataGridViewProducts, this.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dataGridViewProducts_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            try
+            {
+                newRowAdding = false;
+
+                foreach (DataGridViewRow s in dataGridViewProducts.Rows)
+                {
+                    if (s.Index <= dataGridViewProducts.Rows.Count - 2)
+                    {
+                        if (s.Cells["Наименование"].Value.ToString() == ""
+                            || s.Cells["Кол-во на складе"].Value.ToString() == ""
+                            || s.Cells["Ед.изм."].Value.ToString() == ""
+                            || s.Cells["Стоимость"].Value.ToString() == ""
+                            || s.Cells["Описание"].Value.ToString() == "")
+                            return;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

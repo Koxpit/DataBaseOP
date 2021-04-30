@@ -48,7 +48,7 @@ namespace DataBaseOP
             this.dataGridViewCategories.TabIndex = 0;
             this.dataGridViewCategories.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCategories_CellContentClick);
             this.dataGridViewCategories.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCategories_CellValueChanged);
-            this.dataGridViewCategories.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewCategories_EditingControlShowing);
+            this.dataGridViewCategories.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewCategories_DataError);
             this.dataGridViewCategories.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewCategories_UserAddedRow);
             // 
             // menuStrip

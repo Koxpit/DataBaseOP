@@ -68,6 +68,7 @@ namespace DataBaseOP
             this.dataGridViewClients.TabIndex = 1;
             this.dataGridViewClients.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewClients_CellContentClick);
             this.dataGridViewClients.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewClients_CellValueChanged);
+            this.dataGridViewClients.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewClients_DataError);
             this.dataGridViewClients.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewClients_EditingControlShowing);
             this.dataGridViewClients.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewClients_UserAddedRow);
             // 

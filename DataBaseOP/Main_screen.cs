@@ -20,9 +20,8 @@ namespace DataBaseOP
             InitializeComponent();
             this.FormClosing += DataBase_Closing;
         }
-        private void DataBase_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void DataBase_Closing(object sender, System.ComponentModel.CancelEventArgs e) //обработка нажатия крестика
         {
-
             if (MessageBox.Show("Вы уверен что хотите выйти ?", "Внимание", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.OK)
                 e.Cancel = false;
             else
@@ -94,5 +93,9 @@ namespace DataBaseOP
             this.Close();
         }
 
+        private void DataBase_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -69,6 +69,13 @@ namespace DataBaseOP
 
                         if (newRealization != null)
                         {
+                            int currentRealizationId = realizationController.GetRealizationIdByNumber(newRealization.Number);
+                            if (currentRealizationId != 0)
+                            {
+                                MessageBox.Show("Реализация с введенным номером договора уже существует.");
+                                return;
+                            }
+
                             realizationController.Add(newRealization);
                             dataGridViewRealizations.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
                         }
@@ -81,6 +88,13 @@ namespace DataBaseOP
 
                         if (updatedRealiaztion != null)
                         {
+                            int currentRealizationId = realizationController.GetRealizationIdByNumber(updatedRealiaztion.Number);
+                            if (updatedRealiaztion.ID != currentRealizationId && currentRealizationId != 0)
+                            {
+                                MessageBox.Show("Реализация с введенным номером договора уже существует.");
+                                return;
+                            }
+
                             realizationController.Edit(updatedRealiaztion);
                             currentRow.Cells["Операция"].Value = "Удалить";
                         }
@@ -167,6 +181,12 @@ namespace DataBaseOP
                 ProductID = realizationViewModel.ProductID
             };
 
+            if (CellsIsNull(realization))
+            {
+                MessageBox.Show("Заполните все поля!");
+                return null;
+            }
+
             return realization;
         }
 
@@ -183,29 +203,47 @@ namespace DataBaseOP
             {
                 MessageBox.Show("Поставщик не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 handleOK = false;
+                return handleOK;
             }
             if (supplierId == 0)
             {
                 MessageBox.Show("Поставщик не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 handleOK = false;
+                return handleOK;
             }
             if (realizationId != 0)
             {
                 MessageBox.Show("Реализация уже существует", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 handleOK = false;
+                return handleOK;
             }
             if (seniorId == 0)
             {
                 MessageBox.Show("Рабочий не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 handleOK = false;
+                return handleOK;
             }
             if (productId == 0)
             {
                 MessageBox.Show("Продукт не найден", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 handleOK = false;
+                return handleOK;
             }
 
             return handleOK;
+        }
+
+        private bool CellsIsNull(Realization realization)
+        {
+            bool isNull = false;
+
+            if (realization.Number == "" || realization.PaidOf == 0
+                || realization.RealizeDate == DateTime.MinValue || realization.RealizeDate == null
+                || realization.AmountDue == 0 || realization.Cost == 0 || realization.Change == 0
+                || realization.AmountProducts == 0 || realization.Discount == 0)
+                isNull = true;
+
+            return isNull;
         }
 
         private void CreateNumberRealization(ref string number)
@@ -259,6 +297,10 @@ namespace DataBaseOP
                     int rowIndex = dataGridViewRealizations.SelectedCells[0].RowIndex;
                     DataGridViewRow editingRow = dataGridViewRealizations.Rows[rowIndex];
 
+                    Realization realization = GetRealizationInfo(ref editingRow);
+                    if (realization == null)
+                        return;
+
                     DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
                     dataGridViewRealizations[editingRow.Cells["Операция"].ColumnIndex, rowIndex] = linkCell;
                     editingRow.Cells["Операция"].Value = "Изм.";
@@ -272,35 +314,66 @@ namespace DataBaseOP
 
         private void dataGridViewRealizations_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            e.Control.KeyPress -= new KeyPressEventHandler(Column_KeyPress);
-
-            if (dataGridViewRealizations.CurrentCell.ColumnIndex == 1)
+            try
             {
                 TextBox textBox = e.Control as TextBox;
+                int columnIndex = dataGridViewRealizations.CurrentCell.ColumnIndex;
 
-                if (textBox != null)
-                {
-                    textBox.KeyPress += new KeyPressEventHandler(Column_KeyPress);
-                }
+                if (columnIndex == 1 || columnIndex == 3 || columnIndex == 4
+                    || columnIndex == 5 || columnIndex == 6 || columnIndex == 7
+                    || columnIndex == 8 || columnIndex == 9 || columnIndex == 10
+                    || columnIndex == 11)
+                    if (textBox != null)
+                        textBox.KeyPress += new KeyPressEventHandler(InputHandlerService.DigitOnly);
+
+                if (columnIndex == 2)
+                    if (textBox != null)
+                        textBox.KeyPress += new KeyPressEventHandler(InputHandlerService.DateTimeOnly);
             }
-        }
-
-        private void Column_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (char.IsSymbol(e.KeyChar) && char.IsDigit(e.KeyChar))
+            catch (Exception ex)
             {
-                e.Handled = true;
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void экспортВExcelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ExcelService.ExportToExcel(dataGridViewRealizations, this.Text);
+            try
+            {
+                ExcelService.ExportToExcel(dataGridViewRealizations, this.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void toolTip_Popup(object sender, PopupEventArgs e)
+        private void dataGridViewRealizations_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
+            try
+            {
+                newRowAdding = false;
 
+                foreach (DataGridViewRow s in dataGridViewRealizations.Rows)
+                {
+                    if (s.Index <= dataGridViewRealizations.Rows.Count - 2)
+                    {
+                        if (s.Cells["Номер договора"].Value.ToString() == ""
+                            || s.Cells["Оплачено"].Value.ToString() == ""
+                            || s.Cells["Срок реализации"].Value.ToString() == ""
+                            || s.Cells["Сумма к оплате"].Value.ToString() == ""
+                            || s.Cells["Стоимость"].Value.ToString() == ""
+                            || s.Cells["Сдача"].Value.ToString() == ""
+                            || s.Cells["Кол-во продукции"].Value.ToString() == ""
+                            || s.Cells["Скидка (%)"].Value.ToString() == "")
+                            return;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

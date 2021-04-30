@@ -47,6 +47,15 @@ namespace DataBaseOP
                 {
                     int rowIndex = dataGridViewCategories.Rows.Count - 2;
                     Category newCategory = GetCategoryInfo(rowIndex);
+                    if (newCategory == null)
+                        return;
+
+                    int currentCategoryId = categoryController.GetCategoryIdByName(newCategory.Name);
+                    if (currentCategoryId != 0)
+                    {
+                        MessageBox.Show("Введенная категория уже существует.");
+                        return;
+                    }
 
                     categoryController.Add(newCategory);
                     dataGridViewCategories.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
@@ -55,6 +64,15 @@ namespace DataBaseOP
                 {
                     int rowIndex = e.RowIndex;
                     Category updatedCategory = GetCategoryInfo(rowIndex);
+                    if (updatedCategory == null)
+                        return;
+
+                    int currentCategoryId = categoryController.GetCategoryIdByName(updatedCategory.Name);
+                    if (updatedCategory.ID != currentCategoryId && currentCategoryId != 0)
+                    {
+                        MessageBox.Show("Введенная категория уже существует.");
+                        return;
+                    }
 
                     categoryController.Edit(updatedCategory);
                     dataGridViewCategories.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
@@ -72,7 +90,23 @@ namespace DataBaseOP
                 Name = dataGridViewCategories.Rows[rowIndex].Cells["Наименование"].Value.ToString()
             };
 
+            if (CellsIsNull(category))
+                return null;
+
             return category;
+        }
+
+        private bool CellsIsNull(Category category)
+        {
+            bool isNull = false;
+
+            if (category.Name == "")
+            {
+                MessageBox.Show("Ошибка! Заполните поле 'Наименование'!");
+                isNull = true;
+            }
+
+            return isNull;
         }
 
         private void dataGridViewCategories_UserAddedRow(object sender, DataGridViewRowEventArgs e)
@@ -105,6 +139,10 @@ namespace DataBaseOP
                     int rowIndex = dataGridViewCategories.SelectedCells[0].RowIndex;
                     DataGridViewRow editingRow = dataGridViewCategories.Rows[rowIndex];
 
+                    Category category = GetCategoryInfo(editingRow.Index);
+                    if (category == null)
+                        return;
+
                     DataGridViewLinkCell linkCell = new DataGridViewLinkCell();
                     dataGridViewCategories[editingRow.Cells["Операция"].ColumnIndex, rowIndex] = linkCell;
                     editingRow.Cells["Операция"].Value = "Изм.";
@@ -116,32 +154,37 @@ namespace DataBaseOP
             }
         }
 
-        private void dataGridViewCategories_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-        {
-            e.Control.KeyPress -= new KeyPressEventHandler(Column_KeyPress);
-
-            if (dataGridViewCategories.CurrentCell.ColumnIndex == 1)
-            {
-                TextBox textBox = e.Control as TextBox;
-
-                if (textBox != null)
-                {
-                    textBox.KeyPress += new KeyPressEventHandler(Column_KeyPress);
-                }
-            }
-        }
-
-        private void Column_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (char.IsSymbol(e.KeyChar) && char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
-        }
-
         private void экспортВExcelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ExcelService.ExportToExcel(dataGridViewCategories, this.Text);
+            try
+            {
+                ExcelService.ExportToExcel(dataGridViewCategories, this.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dataGridViewCategories_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            try
+            {
+                newRowAdding = false;
+
+                foreach (DataGridViewRow s in dataGridViewCategories.Rows)
+                {
+                    if (s.Index <= dataGridViewCategories.Rows.Count - 2)
+                    {
+                        if (s.Cells["Наиименование"].Value.ToString() == "")
+                            return;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
