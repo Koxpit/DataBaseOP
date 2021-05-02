@@ -24,12 +24,15 @@ namespace DataBaseOP.Services
 
             foreach (DataGridViewColumn column in dataGridView.Columns)
             {
-                worksheet.Cells[2, column.Index + 1] = column.HeaderText;
-                worksheet.Cells[2, column.Index + 1].Borders.LineStyle = 1;
+                if (column.HeaderText != "Операция")
+                {
+                    worksheet.Cells[2, column.Index + 1] = column.HeaderText;
+                    worksheet.Cells[2, column.Index + 1].Borders.LineStyle = 1;
+                }
             }
 
             for (int i = 0; i < dataGridView.RowCount; i++)
-                for (int j = 0; j < dataGridView.ColumnCount; j++)
+                for (int j = 0; j < dataGridView.ColumnCount-1; j++)
                 {
                     worksheet.Cells[i + 3, j + 1] = dataGridView[j, i].Value;
                     worksheet.Cells[i + 3, j + 1].Borders.LineStyle = 1;

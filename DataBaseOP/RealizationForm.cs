@@ -43,8 +43,11 @@ namespace DataBaseOP
 
         private void dataGridViewRealizations_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+           
             try
             {
+                if (e.RowIndex == -1) //редактрование с второй строки
+                    return;
                 CellContentClickTip(ref e);
 
                 int taskIndex = dataGridViewRealizations.Rows[e.RowIndex].Cells["Операция"].ColumnIndex;

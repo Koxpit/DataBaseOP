@@ -22,11 +22,11 @@ namespace DataBaseOP
             trademarkController = new TrademarkController();
         }
 
-        private void ProductForm_Load(object sender, EventArgs e)
+        private void ProductForm_Load(object sender, EventArgs e) //загрузка формы
         {
             try
             {
-                productController.GetAllProducts(ref dataGridViewProducts);
+                productController.GetAllProducts(ref dataGridViewProducts); //загрузка данных в таблицу из БД
             }
             catch (Exception ex)
             {
@@ -36,60 +36,70 @@ namespace DataBaseOP
 
         private void dataGridViewProducts_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            int taskIndex = dataGridViewProducts.Rows[e.RowIndex].Cells["Операция"].ColumnIndex;
-
-            if (e.ColumnIndex == taskIndex)
+            try
             {
-                string task = dataGridViewProducts.Rows[e.RowIndex].Cells["Операция"].Value.ToString();
 
-                if (task == "Удалить")
+                if (e.RowIndex == -1) //редактрование с второй строки
+                    return;
+                int taskIndex = dataGridViewProducts.Rows[e.RowIndex].Cells["Операция"].ColumnIndex;
+
+                if (e.ColumnIndex == taskIndex)
                 {
-                    if (MessageBox.Show("Удалить эту строку?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    string task = dataGridViewProducts.Rows[e.RowIndex].Cells["Операция"].Value.ToString();
+
+                    if (task == "Удалить")
                     {
-                        int id = (int)dataGridViewProducts.CurrentRow.Cells["ID"].Value;
-                        productController.Delete(id);
+                        if (MessageBox.Show("Удалить эту строку?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            int id = (int)dataGridViewProducts.CurrentRow.Cells["ID"].Value;
+                            productController.Delete(id);
+                        }
                     }
-                }
-                else if (task == "Добавить")
-                {
-                    int rowIndex = dataGridViewProducts.Rows.Count - 2;
-                    DataGridViewRow currentRow = dataGridViewProducts.Rows[rowIndex];
-
-                    Product newProduct = GetProductInfo(ref currentRow);
-                    if (newProduct == null)
-                        return;
-
-                    int currentProductId = productController.GetProductIdByName(newProduct.Name);
-                    if (currentProductId != 0)
+                    else if (task == "Добавить")
                     {
-                        MessageBox.Show("Продукт с введенным названием уже существует.");
-                        return;
+                        int rowIndex = dataGridViewProducts.Rows.Count - 2;
+                        DataGridViewRow currentRow = dataGridViewProducts.Rows[rowIndex];
+
+                        Product newProduct = GetProductInfo(ref currentRow);
+                        if (newProduct == null)
+                            return;
+
+                        int currentProductId = productController.GetProductIdByName(newProduct.Name);
+                        if (currentProductId != 0)
+                        {
+                            MessageBox.Show("Продукт с введенным названием уже существует.");
+                            return;
+                        }
+
+                        productController.Add(newProduct);
+                        dataGridViewProducts.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
                     }
-
-                    productController.Add(newProduct);
-                    dataGridViewProducts.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
-                }
-                else if (task == "Изм.")
-                {
-                    int rowIndex = e.RowIndex;
-                    DataGridViewRow currentRow = dataGridViewProducts.Rows[rowIndex];
-
-                    Product updatedProduct = GetProductInfo(ref currentRow);
-                    if (updatedProduct == null)
-                        return;
-
-                    int currentProductId = productController.GetProductIdByName(updatedProduct.Name);
-                    if (updatedProduct.ID != currentProductId && currentProductId != 0)
+                    else if (task == "Изм.")
                     {
-                        MessageBox.Show("Продукт с введенным названием уже существует.");
-                        return;
+                        int rowIndex = e.RowIndex;
+                        DataGridViewRow currentRow = dataGridViewProducts.Rows[rowIndex];
+
+                        Product updatedProduct = GetProductInfo(ref currentRow);
+                        if (updatedProduct == null)
+                            return;
+
+                        int currentProductId = productController.GetProductIdByName(updatedProduct.Name);
+                        if (updatedProduct.ID != currentProductId && currentProductId != 0)
+                        {
+                            MessageBox.Show("Продукт с введенным названием уже существует.");
+                            return;
+                        }
+
+                        productController.Edit(updatedProduct);
+                        currentRow.Cells["Операция"].Value = "Удалить";
                     }
 
-                    productController.Edit(updatedProduct);
-                    currentRow.Cells["Операция"].Value = "Удалить";
+                    productController.GetAllProducts(ref dataGridViewProducts);
                 }
-
-                productController.GetAllProducts(ref dataGridViewProducts);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

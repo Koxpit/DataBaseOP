@@ -31,68 +31,78 @@ namespace DataBaseOP
 
         private void dataGridViewClients_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            int taskIndex = dataGridViewClients.Rows[e.RowIndex].Cells["Операция"].ColumnIndex;
-
-            if (e.ColumnIndex == taskIndex)
+            try
             {
-                string task = dataGridViewClients.Rows[e.RowIndex].Cells[taskIndex].Value.ToString();
+                if (e.RowIndex == -1) //редактрование с второй строки
+                    return;
 
-                if (task == "Удалить")
+                int taskIndex = dataGridViewClients.Rows[e.RowIndex].Cells["Операция"].ColumnIndex;
+
+                if (e.ColumnIndex == taskIndex)
                 {
-                    if (MessageBox.Show("Удалить эту строку?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    string task = dataGridViewClients.Rows[e.RowIndex].Cells[taskIndex].Value.ToString();
+
+                    if (task == "Удалить")
                     {
-                        int id = (int)dataGridViewClients.CurrentRow.Cells[0].Value;
-                        clientController.Delete(id);
+                        if (MessageBox.Show("Удалить эту строку?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            int id = (int)dataGridViewClients.CurrentRow.Cells[0].Value;
+                            clientController.Delete(id);
+                        }
                     }
+                    else if (task == "Добавить")
+                    {
+                        int rowIndex = dataGridViewClients.Rows.Count - 2;
+                        DataGridViewRow currentRow = dataGridViewClients.Rows[rowIndex];
+
+                        Client newClient = GetClientInfo(ref currentRow);
+                        if (newClient == null)
+                            return;
+
+                        if (newClient.Phone.Length > 11)
+                        {
+                            MessageBox.Show("Номер телефона должен состоять не более чем из 11 цифр.");
+                            return;
+                        }
+
+                        int currentClientId = clientController.GetClientIdByPhone(newClient.Phone);
+                        if (currentClientId != 0)
+                        {
+                            MessageBox.Show("Введенный номер телефона уже принадлежит другому заказчику.");
+                            return;
+                        }
+
+                        clientController.Add(newClient);
+
+                        dataGridViewClients.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
+                    }
+                    else if (task == "Изм.")
+                    {
+                        int rowIndex = e.RowIndex;
+                        DataGridViewRow currentRow = dataGridViewClients.Rows[rowIndex];
+
+                        Client updatedClient = GetClientInfo(ref currentRow);
+                        if (updatedClient == null)
+                            return;
+
+                        int currentClientId = clientController.GetClientIdByPhone(updatedClient.Phone);
+                        if (updatedClient.ID != currentClientId && currentClientId != 0)
+                        {
+                            MessageBox.Show("Введенный номер телефона уже принадлежит другому заказчику.");
+                            return;
+                        }
+
+                        clientController.Edit(updatedClient);
+
+                        dataGridViewClients.Rows[rowIndex].Cells["Операция"].Value = "Удалить";
+                    }
+
+                    clientController.GetAllClients(ref dataGridViewClients);
                 }
-                else if (task == "Добавить")
-                {
-                    int rowIndex = dataGridViewClients.Rows.Count - 2;
-                    DataGridViewRow currentRow = dataGridViewClients.Rows[rowIndex];
-
-                    Client newClient = GetClientInfo(ref currentRow);
-                    if (newClient == null)
-                        return;
-
-                    if (newClient.Phone.Length > 11)
-                    {
-                        MessageBox.Show("Номер телефона должен состоять не более чем из 11 цифр.");
-                        return;
-                    }
-
-                    int currentClientId = clientController.GetClientIdByPhone(newClient.Phone);
-                    if (currentClientId != 0)
-                    {
-                        MessageBox.Show("Введенный номер телефона уже принадлежит другому заказчику.");
-                        return;
-                    }
-
-                    clientController.Add(newClient);
-
-                    dataGridViewClients.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
-                }
-                else if (task == "Изм.")
-                {
-                    int rowIndex = e.RowIndex;
-                    DataGridViewRow currentRow = dataGridViewClients.Rows[rowIndex];
-
-                    Client updatedClient = GetClientInfo(ref currentRow);
-                    if (updatedClient == null)
-                        return;
-
-                    int currentClientId = clientController.GetClientIdByPhone(updatedClient.Phone);
-                    if (updatedClient.ID != currentClientId && currentClientId != 0)
-                    {
-                        MessageBox.Show("Введенный номер телефона уже принадлежит другому заказчику.");
-                        return;
-                    }
-
-                    clientController.Edit(updatedClient);
-
-                    dataGridViewClients.Rows[rowIndex].Cells["Операция"].Value = "Удалить";
-                }
-
-                clientController.GetAllClients(ref dataGridViewClients);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

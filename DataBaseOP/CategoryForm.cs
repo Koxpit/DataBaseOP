@@ -31,54 +31,63 @@ namespace DataBaseOP
 
         private void dataGridViewCategories_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 2)
+            try
             {
-                string task = dataGridViewCategories.Rows[e.RowIndex].Cells[2].Value.ToString();
-
-                if (task == "Удалить")
+                if (e.RowIndex == -1) //редактрование с второй строки
+                    return;
+                if (e.ColumnIndex == 2)
                 {
-                    if (MessageBox.Show("Удалить эту строку?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    string task = dataGridViewCategories.Rows[e.RowIndex].Cells[2].Value.ToString();
+
+                    if (task == "Удалить")
                     {
-                        int id = (int)dataGridViewCategories.CurrentRow.Cells[0].Value;
-                        categoryController.Delete(id);
+                        if (MessageBox.Show("Удалить эту строку?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            int id = (int)dataGridViewCategories.CurrentRow.Cells[0].Value;
+                            categoryController.Delete(id);
+                        }
                     }
-                }
-                else if (task == "Добавить")
-                {
-                    int rowIndex = dataGridViewCategories.Rows.Count - 2;
-                    Category newCategory = GetCategoryInfo(rowIndex);
-                    if (newCategory == null)
-                        return;
-
-                    int currentCategoryId = categoryController.GetCategoryIdByName(newCategory.Name);
-                    if (currentCategoryId != 0)
+                    else if (task == "Добавить")
                     {
-                        MessageBox.Show("Введенная категория уже существует.");
-                        return;
+                        int rowIndex = dataGridViewCategories.Rows.Count - 2;
+                        Category newCategory = GetCategoryInfo(rowIndex);
+                        if (newCategory == null)
+                            return;
+
+                        int currentCategoryId = categoryController.GetCategoryIdByName(newCategory.Name);
+                        if (currentCategoryId != 0)
+                        {
+                            MessageBox.Show("Введенная категория уже существует.");
+                            return;
+                        }
+
+                        categoryController.Add(newCategory);
+                        dataGridViewCategories.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
                     }
-
-                    categoryController.Add(newCategory);
-                    dataGridViewCategories.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
-                }
-                else if (task == "Изм.")
-                {
-                    int rowIndex = e.RowIndex;
-                    Category updatedCategory = GetCategoryInfo(rowIndex);
-                    if (updatedCategory == null)
-                        return;
-
-                    int currentCategoryId = categoryController.GetCategoryIdByName(updatedCategory.Name);
-                    if (updatedCategory.ID != currentCategoryId && currentCategoryId != 0)
+                    else if (task == "Изм.")
                     {
-                        MessageBox.Show("Введенная категория уже существует.");
-                        return;
+                        int rowIndex = e.RowIndex;
+                        Category updatedCategory = GetCategoryInfo(rowIndex);
+                        if (updatedCategory == null)
+                            return;
+
+                        int currentCategoryId = categoryController.GetCategoryIdByName(updatedCategory.Name);
+                        if (updatedCategory.ID != currentCategoryId && currentCategoryId != 0)
+                        {
+                            MessageBox.Show("Введенная категория уже существует.");
+                            return;
+                        }
+
+                        categoryController.Edit(updatedCategory);
+                        dataGridViewCategories.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
                     }
 
-                    categoryController.Edit(updatedCategory);
-                    dataGridViewCategories.Rows[e.RowIndex].Cells["Операция"].Value = "Удалить";
+                    categoryController.GetAllCategories(ref dataGridViewCategories);
                 }
-
-                categoryController.GetAllCategories(ref dataGridViewCategories);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

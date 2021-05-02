@@ -1,14 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using DataBaseOP.Database;
 
 namespace DataBaseOP
 {
@@ -31,61 +22,61 @@ namespace DataBaseOP
         private void Client_Click(object sender, EventArgs e)
         {
             ClientForm newForm = new ClientForm();
-            newForm.Show();
+            newForm.ShowDialog();
         }
 
         private void Worker_Click(object sender, EventArgs e)
         {
             WorkerForm newForm = new WorkerForm();
-            newForm.Show();
+            newForm.ShowDialog();
         }
 
         private void Position_Click(object sender, EventArgs e)
         {
             PositionForm newForm = new PositionForm();
-            newForm.Show();
+            newForm.ShowDialog();
         }
 
         private void Trademark_Click(object sender, EventArgs e)
         {
             TrademarkForm newForm = new TrademarkForm();
-            newForm.Show();
+            newForm.ShowDialog();
         }
 
         private void Product_Click(object sender, EventArgs e)
         {
             ProductForm newForm = new ProductForm();
-            newForm.Show();
+            newForm.ShowDialog();
         }
 
         private void Realization_Click(object sender, EventArgs e)
         {
             RealizationForm newForm = new RealizationForm();
-            newForm.Show();
+            newForm.ShowDialog();
         }
 
         private void Supplier_Click(object sender, EventArgs e)
         {
             SupplierForm newForm = new SupplierForm();
-            newForm.Show();
+            newForm.ShowDialog();
         }
 
         private void Category_Click(object sender, EventArgs e)
         {
             CategoryForm newForm = new CategoryForm();
-            newForm.Show();
+            newForm.ShowDialog();
         }
 
         private void OneToolStripMenuItem_Click(object sender, EventArgs e)
         {
            Report newForm = new Report();
-            newForm.Show();
+            newForm.ShowDialog();
         }
 
         private void TwoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutBox newForm = new AboutBox();
-            newForm.Show();
+            newForm.ShowDialog();
         }
 
         private void ExitToolStripMenuItem2_Click(object sender, EventArgs e)

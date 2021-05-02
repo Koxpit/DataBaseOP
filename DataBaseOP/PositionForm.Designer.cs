@@ -39,6 +39,8 @@ namespace DataBaseOP
             // 
             // dataGridViewPositions
             // 
+            this.dataGridViewPositions.AllowUserToAddRows = false;
+            this.dataGridViewPositions.AllowUserToDeleteRows = false;
             this.dataGridViewPositions.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.dataGridViewPositions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewPositions.Dock = System.Windows.Forms.DockStyle.Fill;

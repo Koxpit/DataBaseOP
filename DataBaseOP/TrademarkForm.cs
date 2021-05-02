@@ -33,6 +33,8 @@ namespace DataBaseOP
         {
             try
             {
+                if (e.RowIndex == -1) //редактрование с второй строки
+                    return;
                 int taskIndex = dataGridViewTrademarks.Rows[e.RowIndex].Cells["Операция"].ColumnIndex;
 
                 if (e.ColumnIndex == taskIndex)

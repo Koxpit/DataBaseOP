@@ -39,11 +39,14 @@ namespace DataBaseOP
             // 
             // dataGridViewWorkers
             // 
+            this.dataGridViewWorkers.AllowUserToAddRows = false;
+            this.dataGridViewWorkers.AllowUserToDeleteRows = false;
             this.dataGridViewWorkers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.dataGridViewWorkers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewWorkers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewWorkers.Location = new System.Drawing.Point(0, 27);
             this.dataGridViewWorkers.Name = "dataGridViewWorkers";
+            this.dataGridViewWorkers.ReadOnly = true;
             this.dataGridViewWorkers.Size = new System.Drawing.Size(800, 423);
             this.dataGridViewWorkers.TabIndex = 0;
             // 
