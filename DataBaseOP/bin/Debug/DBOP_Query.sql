@@ -196,6 +196,7 @@ CREATE PROCEDURE sp_InsertRealization
 @RealizeDate DATE,
 @SupplierID INT,
 @SeniorID INT,
+@ClientID INT,
 @Cost MONEY,
 @Discount MONEY,
 @AmountDue MONEY,
@@ -205,8 +206,8 @@ CREATE PROCEDURE sp_InsertRealization
 @ProductID INT,
 @Realized BIT
 AS
-INSERT INTO Realization(Number, RealizeDate, SupplierID, SeniorID, Cost, Discount, AmountDue, PaidOf, Change, AmountProducts, ProductID, Realized) 
-VALUES (@Number, @RealizeDate, @SupplierID, @SeniorID, @Cost, @Discount, @AmountDue, @PaidOf, @Change, @AmountProducts, @ProductID, @Realized)
+INSERT INTO Realization(Number, RealizeDate, SupplierID, SeniorID, ClientID, Cost, Discount, AmountDue, PaidOf, Change, AmountProducts, ProductID, Realized)
+VALUES (@Number, @RealizeDate, @SupplierID, @SeniorID, @ClientID, @Cost, @Discount, @AmountDue, @PaidOf, @Change, @AmountProducts, @ProductID, @Realized)
 GO
 
 

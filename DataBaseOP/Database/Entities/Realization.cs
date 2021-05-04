@@ -8,7 +8,7 @@ namespace DataBaseOP.Database.Entities
         public string Number { get; set; }
         public DateTime RealizeDate { get; set; }
         public decimal Cost { get; set; }
-        public decimal Discount { get; set; }
+        public int Discount { get; set; }
         public decimal AmountDue { get; set; }
         public decimal PaidOf { get; set; }
         public decimal Change { get; set; }

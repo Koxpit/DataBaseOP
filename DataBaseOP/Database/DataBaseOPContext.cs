@@ -629,11 +629,37 @@ namespace DataBaseOP.Database
                 connection.Open();
 
                 Realization newRealization = realization;
-                string name = newRealization.Number;
+                string number = newRealization.Number;
+                DateTime realizeDate = newRealization.RealizeDate;
+                decimal cost = newRealization.Cost;
+                int discount = newRealization.Discount;
+                decimal amountDue = newRealization.AmountDue;
+                decimal paidOf = newRealization.PaidOf;
+                decimal change = newRealization.Change;
+                int amountProducts = newRealization.AmountProducts;
+                bool realized = newRealization.Realized;
+                int clientId = newRealization.ClientID;
+                int supplierId = newRealization.SupplierID;
+                int seniorId = newRealization.SeniorID;
+                int productId = newRealization.ProductID;
+
 
                 SqlCommand command = new SqlCommand("sp_InsertRealization", connection);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@Number", name);
+
+                command.Parameters.AddWithValue("@ProductID", productId);
+                command.Parameters.AddWithValue("@Number", number);
+                command.Parameters.AddWithValue("@RealizeDate", realizeDate);
+                command.Parameters.AddWithValue("@Cost", cost);
+                command.Parameters.AddWithValue("@Discount", discount);
+                command.Parameters.AddWithValue("@AmountDue", amountDue);
+                command.Parameters.AddWithValue("@PaidOf", paidOf);
+                command.Parameters.AddWithValue("@Change", change);
+                command.Parameters.AddWithValue("@AmountProducts", amountProducts);
+                command.Parameters.AddWithValue("@Realized", realized);
+                command.Parameters.AddWithValue("@ClientID", clientId);
+                command.Parameters.AddWithValue("@SupplierID", supplierId);
+                command.Parameters.AddWithValue("@SeniorID", seniorId);
 
                 command.ExecuteNonQuery();
 

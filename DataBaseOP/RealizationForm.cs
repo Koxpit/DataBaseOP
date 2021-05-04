@@ -44,8 +44,8 @@ namespace DataBaseOP
         private void dataGridViewRealizations_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
            
-            try
-            {
+           // try
+           // {
                 if (e.RowIndex == -1) //редактрование с второй строки
                     return;
                 CellContentClickTip(ref e);
@@ -105,11 +105,11 @@ namespace DataBaseOP
 
                     realizationController.GetAllRealizations(ref dataGridViewRealizations);
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //}
+           // catch (Exception ex)
+           //{
+          //      MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          // }
         }
 
         private void CellContentClickTip(ref DataGridViewCellEventArgs e)
@@ -162,15 +162,17 @@ namespace DataBaseOP
                 CreateNumberRealization(ref currentNumberRealization);
 
             decimal change = GetChange((decimal)currentRow.Cells["Оплачено"].Value, (decimal)currentRow.Cells["Сумма к оплате"].Value);
-            decimal amountDue = GetAmountDue((decimal)currentRow.Cells["Стоимость"].Value, (int)currentRow.Cells["Скидка (%)"].Value);
-
-            Realization realization = new Realization
+            decimal cost = (decimal)currentRow.Cells["Стоимость"].Value;
+            // int discount = (int)currentRow.Cells["Скидка (%)"].Value;
+            int discount = Convert.ToInt32(currentRow.Cells["Скидка (%)"].Value);
+            decimal amountDue = GetAmountDue(cost, discount);
+            Realization realization = new Realization()
             {
                 ID = (int)currentRow.Cells["ID"].Value,
                 Number = currentNumberRealization,
                 RealizeDate = Convert.ToDateTime(currentRow.Cells["Срок реализации"].Value),
                 Cost = (decimal)currentRow.Cells["Стоимость"].Value,
-                Discount = (int)currentRow.Cells["Скидка (%)"].Value,
+                Discount = Convert.ToInt32(currentRow.Cells["Скидка (%)"].Value),
                 AmountDue = amountDue,
                 PaidOf = (decimal)currentRow.Cells["Оплачено"].Value,
                 Change = change,
@@ -256,7 +258,7 @@ namespace DataBaseOP
             return change;
         }
 
-        private decimal GetAmountDue(decimal cost, decimal discount)
+        private decimal GetAmountDue(decimal cost, int discount)
         {
             return cost - cost * (discount / 100);
         }
