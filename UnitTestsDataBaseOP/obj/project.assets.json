@@ -5655,24 +5655,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\denko\\.nuget\\packages\\": {},
+    "C:\\Users\\lenovo\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\denko\\OneDrive\\Рабочий стол\\курсовая\\DataBaseOP\\UnitTestsDataBaseOP\\UnitTestsDataBaseOP.csproj",
+      "projectUniqueName": "C:\\Users\\lenovo\\Desktop\\DataBaseOP\\DataBaseOP\\UnitTestsDataBaseOP\\UnitTestsDataBaseOP.csproj",
       "projectName": "UnitTestsDataBaseOP",
-      "projectPath": "C:\\Users\\denko\\OneDrive\\Рабочий стол\\курсовая\\DataBaseOP\\UnitTestsDataBaseOP\\UnitTestsDataBaseOP.csproj",
-      "packagesPath": "C:\\Users\\denko\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\denko\\OneDrive\\Рабочий стол\\курсовая\\DataBaseOP\\UnitTestsDataBaseOP\\obj\\",
+      "projectPath": "C:\\Users\\lenovo\\Desktop\\DataBaseOP\\DataBaseOP\\UnitTestsDataBaseOP\\UnitTestsDataBaseOP.csproj",
+      "packagesPath": "C:\\Users\\lenovo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\lenovo\\Desktop\\DataBaseOP\\DataBaseOP\\UnitTestsDataBaseOP\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\denko\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -5683,10 +5686,9 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\denko\\OneDrive\\Рабочий стол\\курсовая\\DataBaseOP\\DataBaseOP\\DataBaseOP.csproj": {
-              "projectPath": "C:\\Users\\denko\\OneDrive\\Рабочий стол\\курсовая\\DataBaseOP\\DataBaseOP\\DataBaseOP.csproj"
+            "C:\\Users\\lenovo\\Desktop\\DataBaseOP\\DataBaseOP\\DataBaseOP\\DataBaseOP.csproj": {
+              "projectPath": "C:\\Users\\lenovo\\Desktop\\DataBaseOP\\DataBaseOP\\DataBaseOP\\DataBaseOP.csproj"
             }
           }
         }
@@ -5699,7 +5701,6 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
-        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "MSTest.TestAdapter": {
             "target": "Package",
@@ -5728,12 +5729,18 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[3.1.2, 3.1.2]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
       }
     }
   }

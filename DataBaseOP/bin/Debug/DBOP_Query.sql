@@ -307,6 +307,7 @@ CREATE PROCEDURE sp_UpdateRealization
 @RealizeDate DATE,
 @SupplierID INT,
 @SeniorID INT,
+@ClientID INT,
 @Cost MONEY,
 @Discount MONEY,
 @AmountDue MONEY,
@@ -318,7 +319,7 @@ CREATE PROCEDURE sp_UpdateRealization
 AS
 UPDATE Realization
 SET Number = @Number, RealizeDate = @RealizeDate, SupplierID = @SupplierID, 
-SeniorID = @SeniorID, Cost = @Cost, Discount = @Discount, AmountDue = @AmountDue,
+SeniorID = @SeniorID, ClientID = @ClientID, Cost = @Cost, Discount = @Discount, AmountDue = @AmountDue,
 PaidOf = @PaidOf, Change = @Change, AmountProducts = @AmountProducts, 
 ProductID = @ProductID, Realized = @Realized
 WHERE ID = @ID

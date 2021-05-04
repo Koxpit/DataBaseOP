@@ -29,6 +29,11 @@ namespace DataBaseOP
             clientController = new ClientController();
         }
 
+        /// <summary>
+        /// Загружает все данные из БД таблицы Realization в DataGridView при загрузке формы.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RealizationForm_Load(object sender, EventArgs e)
         {
             try
@@ -41,11 +46,16 @@ namespace DataBaseOP
             }
         }
 
+        /// <summary>
+        /// Событие, обрабатывающее столбец "Операция". Проверяет какая операция была выбрана и выполняет соответствующий алгоритм.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridViewRealizations_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
            
-           // try
-           // {
+            try
+            {
                 if (e.RowIndex == -1) //редактрование с второй строки
                     return;
                 CellContentClickTip(ref e);
@@ -105,13 +115,17 @@ namespace DataBaseOP
 
                     realizationController.GetAllRealizations(ref dataGridViewRealizations);
                 }
-            //}
-           // catch (Exception ex)
-           //{
-          //      MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-          // }
+            }
+            catch (Exception ex)
+           {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+           }
         }
 
+        /// <summary>
+        /// Метод для появления подсказок при нажатии на ячейку с номер телефоном для таблицы DataGridView
+        /// </summary>
+        /// <param name="e"></param>
         private void CellContentClickTip(ref DataGridViewCellEventArgs e)
         {
             DataGridViewCell clientPhoneCell = dataGridViewRealizations.Rows[e.RowIndex].Cells["Телефон заказчика"];
@@ -138,6 +152,11 @@ namespace DataBaseOP
             }
         }
 
+        /// <summary>
+        /// Возвращает новую/обновленную реализацию на основе данных, введенных в строке DataGridView
+        /// </summary>
+        /// <param name="currentRow">Строка, в которую были введены новые/обновленные данные.</param>
+        /// <returns></returns>
         private Realization GetRealizationInfo(ref DataGridViewRow currentRow)
         {
             RealizationEntitiesIDsVM realizationViewModel = new RealizationEntitiesIDsVM()
@@ -163,7 +182,6 @@ namespace DataBaseOP
 
             decimal change = GetChange((decimal)currentRow.Cells["Оплачено"].Value, (decimal)currentRow.Cells["Сумма к оплате"].Value);
             decimal cost = (decimal)currentRow.Cells["Стоимость"].Value;
-            // int discount = (int)currentRow.Cells["Скидка (%)"].Value;
             int discount = Convert.ToInt32(currentRow.Cells["Скидка (%)"].Value);
             decimal amountDue = GetAmountDue(cost, discount);
             Realization realization = new Realization()
@@ -193,6 +211,11 @@ namespace DataBaseOP
             return realization;
         }
 
+        /// <summary>
+        /// Проверяет существование клиента, поставщика и рабочего на основе данных, полученных из строки DataGridView.
+        /// </summary>
+        /// <param name="realizationViewModel">Модель представления, содержащая в себе идентификаторы связанных таблиц с таблицей Реализация.</param>
+        /// <returns></returns>
         private bool GetInfoHandleNotOK(RealizationEntitiesIDsVM realizationViewModel)
         {
             bool handleNotOK = false;
@@ -229,25 +252,40 @@ namespace DataBaseOP
             return handleNotOK;
         }
 
+        /// <summary>
+        /// Проверяет значения на пустоту.
+        /// </summary>
+        /// <param name="realization">Проверяемый объект.</param>
+        /// <returns></returns>
         private bool CellsIsNull(Realization realization)
         {
             bool isNull = false;
 
-            if (realization.Number == "" || realization.PaidOf == 0
-                || realization.RealizeDate == DateTime.MinValue || realization.RealizeDate == null
-                || realization.AmountDue == 0 || realization.Cost == 0 || realization.Change == 0
-                || realization.AmountProducts == 0 || realization.Discount == 0)
+            if (realization.Number == "" || realization.PaidOf.ToString() == ""
+                || realization.RealizeDate.ToString() == ""
+                || realization.AmountDue.ToString() == "" || realization.Cost.ToString() == "" || realization.Change.ToString() == ""
+                || realization.AmountProducts.ToString() == "" || realization.Discount.ToString() == "")
                 isNull = true;
 
             return isNull;
         }
 
+        /// <summary>
+        /// Придает строке "Номер договора" корректный вид - строка из 8 символов.
+        /// </summary>
+        /// <param name="number"></param>
         private void CreateNumberRealization(ref string number)
         {
             for (int i = 8; number.Length < i;)
                 number = "0" + number;
         }
 
+        /// <summary>
+        /// Вычисляет сдачу.
+        /// </summary>
+        /// <param name="paidOf">Сумма к оплате.</param>
+        /// <param name="amountDue">Оплаченная сумма.</param>
+        /// <returns></returns>
         private decimal GetChange(decimal paidOf, decimal amountDue)
         {
             decimal change = paidOf - amountDue;
@@ -258,11 +296,22 @@ namespace DataBaseOP
             return change;
         }
 
+        /// <summary>
+        /// Вычисляет сумму к оплате, исходя из того, какая скидка дана клиенту.
+        /// </summary>
+        /// <param name="cost">Первоначальная стоимость.</param>
+        /// <param name="discount">Скидка на товар в процентах.</param>
+        /// <returns></returns>
         private decimal GetAmountDue(decimal cost, int discount)
         {
             return cost - cost * (discount / 100);
         }
 
+        /// <summary>
+        /// Событие, возникающее при добавлении новой строки в DataGridView.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridViewRealizations_UserAddedRow(object sender, DataGridViewRowEventArgs e)
         {
             try
@@ -284,6 +333,11 @@ namespace DataBaseOP
             }
         }
 
+        /// <summary>
+        /// Событие изменения данных в ячейке DataGridView.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridViewRealizations_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -308,6 +362,11 @@ namespace DataBaseOP
             }
         }
 
+        /// <summary>
+        /// Событие обработки вводимых данных от пользователя.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridViewRealizations_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             try
@@ -339,6 +398,11 @@ namespace DataBaseOP
             }
         }
 
+        /// <summary>
+        /// Экспорт в Excel.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void экспортВExcelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
